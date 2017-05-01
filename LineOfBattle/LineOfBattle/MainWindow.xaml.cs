@@ -1,5 +1,5 @@
 ﻿using System.Windows;
-using System.Windows.Input;
+using System.Windows.Controls;
 
 namespace LineOfBattle
 {
@@ -14,8 +14,12 @@ namespace LineOfBattle
         public MainWindow()
         {
             InitializeComponent();
-            GameControl.SetGameInstance( new LoB() );
-            GameControl.SetEventHandlers( this );
+            var MainGrid = new Grid();
+            AddChild( MainGrid );
+            var MainControl = new ShootighLibrary.GameControl();
+            MainGrid.Children.Add( MainControl );
+            MainControl.SetGameInstance( new LoB( MainControl ) );
+            MainControl.SetEventHandlers( this );
         }
     }
 }

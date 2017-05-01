@@ -6,7 +6,4 @@
         xmlns:local="clr-namespace:LineOfBattle"
         mc:Ignorable="d"
         Title="Line of Battle" Height="350" Width="525">
-	<Grid>
-		<local:GameControl x:Name="GameControl" />
-	</Grid>
 </Window>

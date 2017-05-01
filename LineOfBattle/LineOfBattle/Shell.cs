@@ -1,5 +1,6 @@
 ﻿using System.Numerics;
 using SharpDX.Direct2D1;
+using ShootighLibrary;
 
 namespace LineOfBattle
 {
@@ -18,11 +19,11 @@ namespace LineOfBattle
         public void Move()
             => DrawOptions.Position += V;
 
-        public void Draw()
+        public void Draw( RenderTarget target )
         {
             var ellipse = new Ellipse( DrawOptions.Position.ToRawVector2(), DrawOptions.Size, DrawOptions.Size );
-            var brush = new SolidColorBrush( Globals.Target, DrawOptions.Color );
-            Globals.Target.DrawEllipse( ellipse, brush );
+            var brush = new SolidColorBrush( target, DrawOptions.Color );
+            target.DrawEllipse( ellipse, brush );
         }
     }
 }

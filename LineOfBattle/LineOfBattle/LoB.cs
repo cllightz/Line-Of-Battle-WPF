@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using SharpDX.Direct2D1;
 using SharpDX.Mathematics.Interop;
+using ShootighLibrary;
 
 namespace LineOfBattle
 {
@@ -12,8 +14,9 @@ namespace LineOfBattle
     class LoB : Game
     {
         #region Fields
+        private RenderTarget Target;
         public Random Rand;
-
+        public ScheneState Schene;
         public AlliesLine Allies;
         public List<Unit> Enemies;
         public List<Shell> AlliesShells;
@@ -22,8 +25,11 @@ namespace LineOfBattle
         #endregion
 
         #region Constructor
-        public LoB()
-            => Rand = new Random();
+        public LoB( GameControl control ) : base( control )
+        {
+            Control = control;
+            Rand = new Random();
+        }
         #endregion
         
         /// <summary>
@@ -32,9 +38,7 @@ namespace LineOfBattle
         /// </summary>
         public override void Initialize()
         {
-            Globals.Game = this;
-
-            ScheneState = ScheneState.Title;
+            Schene = ScheneState.Title;
 
             Enemies = new List<Unit>();
             AlliesShells = new List<Shell>();
@@ -43,21 +47,23 @@ namespace LineOfBattle
 
             var drawoptions = new DrawOptions( new Vector2( Width / 2, Height / 2 ), 6, new RawColor4( 0, 1, 0, 1 ) );
 
-            Allies = new AlliesLine() {
-                new Unit( drawoptions.Clone, 10 ),
-                new Unit( drawoptions.Clone, 10 ),
-                new Unit( drawoptions.Clone, 10 ),
-                new Unit( drawoptions.Clone, 10 ),
-                new Unit( drawoptions.Clone, 10 ),
+            Allies = new AlliesLine( this ) {
+                new Unit( this, drawoptions.Clone, 10 ),
+                new Unit( this, drawoptions.Clone, 10 ),
+                new Unit( this, drawoptions.Clone, 10 ),
+                new Unit( this, drawoptions.Clone, 10 ),
+                new Unit( this, drawoptions.Clone, 10 ),
             };
         }
 
         /// <summary>
         /// ゲームループ
         /// </summary>
-        public override void MainLoop()
+        public override void MainLoop( RenderTarget target )
         {
-            switch ( ScheneState ) {
+            Target = target;
+
+            switch ( Schene ) {
                 case ScheneState.Title:
                     DrawTitle();
                     break;
@@ -78,6 +84,7 @@ namespace LineOfBattle
 
                 Enemies.Add(
                     new Unit(
+                        this,
                         new DrawOptions(
                             new Vector2( Width / 2, Height / 2 ),
                             5,
@@ -128,7 +135,7 @@ namespace LineOfBattle
                     var x = AlliesShells[ i ].DrawOptions.Position.X;
                     var y = AlliesShells[ i ].DrawOptions.Position.Y;
 
-                    if ( x < -100 || Globals.Target.Size.Width + 100 < x || y < -100 || Globals.Target.Size.Height + 100 < y ) {
+                    if ( x < -100 || Target.Size.Width + 100 < x || y < -100 || Target.Size.Height + 100 < y ) {
                         AlliesShells.RemoveAt( i );
                     }
                 }
@@ -145,7 +152,7 @@ namespace LineOfBattle
                 var x = EnemiesShells[ i ].DrawOptions.Position.X;
                 var y = EnemiesShells[ i ].DrawOptions.Position.Y;
 
-                if ( x < -100 || Globals.Target.Size.Width + 100 < x || y < -100 || Globals.Target.Size.Height + 100 < y ) {
+                if ( x < -100 || Target.Size.Width + 100 < x || y < -100 || Target.Size.Height + 100 < y ) {
                     EnemiesShells.RemoveAt( i );
                 }
             }
@@ -172,24 +179,24 @@ namespace LineOfBattle
         private void DrawEnemies()
         {
             foreach ( var u in Enemies ) {
-                u.Draw();
+                u.Draw( Target );
             }
         }
 
         private void DrawAllies()
-            => Allies.Draw();
+            => Allies.Draw( Target );
 
         private void DrawAlliesShells()
         {
             foreach ( var s in AlliesShells ) {
-                s.Draw();
+                s.Draw( Target );
             }
         }
 
         private void DrawEnemiesShells()
         {
             foreach ( var s in EnemiesShells ) {
-                s.Draw();
+                s.Draw( Target );
             }
         }
         #endregion
@@ -200,11 +207,11 @@ namespace LineOfBattle
         private void DrawTitle()
         {
             var white = new RawColor4( 1, 1, 1, 1 );
-            new Label( new DrawOptions( new Vector2( 0, 100 ), 50, white ), "Line of Battle" ).Draw();
-            new Label( new DrawOptions( new Vector2( 0, 200 ), 25, white ), "Press Left Mouse Button to Start" ).Draw();
+            new Label( new DrawOptions( new Vector2( 0, 100 ), 50, white ), "Line of Battle" ).Draw( Target );
+            new Label( new DrawOptions( new Vector2( 0, 200 ), 25, white ), "Press Left Mouse Button to Start" ).Draw( Target );
             
             if ( Mouse.Left ) {
-                ScheneState = ScheneState.Battle;
+                Schene = ScheneState.Battle;
             }
         }
     }

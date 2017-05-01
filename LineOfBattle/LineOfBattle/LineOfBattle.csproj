@@ -124,21 +124,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="DrawOptions.cs" />
     <Compile Include="Faction.cs" />
-    <Compile Include="GameControl.cs" />
-    <Compile Include="Globals.cs" />
-    <Compile Include="IDrawable.cs" />
-    <Compile Include="Game.cs" />
-    <Compile Include="Globals_T.cs" />
-    <Compile Include="Key.cs" />
     <Compile Include="Maneuver.cs" />
-    <Compile Include="Mouse.cs" />
     <Compile Include="ScheneState.cs" />
     <Compile Include="Shell.cs" />
-    <Compile Include="Label.cs" />
     <Compile Include="Unit.cs" />
-    <Compile Include="VectorExtensions.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
