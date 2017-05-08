@@ -14,6 +14,11 @@ namespace LineOfBattle
         public MainWindow()
         {
             InitializeComponent();
+
+            WindowStyle = WindowStyle.None;
+            WindowState = WindowState.Maximized;
+            Topmost = true;
+
             var MainGrid = new Grid();
             AddChild( MainGrid );
             var MainControl = new ShootighLibrary.GameControl();

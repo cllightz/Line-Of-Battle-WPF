@@ -5,5 +5,4 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LineOfBattle"
         mc:Ignorable="d"
-        Title="Line of Battle" Height="350" Width="525">
-</Window>
+        Title="Line of Battle" Height="350" Width="525"/>
