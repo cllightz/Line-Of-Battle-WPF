@@ -89,6 +89,9 @@
     <Reference Include="SharpDX.DXGI, Version=3.1.1.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
       <HintPath>..\packages\SharpDX.DXGI.3.1.1\lib\net45\SharpDX.DXGI.dll</HintPath>
     </Reference>
+    <Reference Include="ShootighLibrary, Version=0.3.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\packages\ShootighLibrary.0.5.1\lib\ShootighLibrary.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
