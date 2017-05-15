@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using System.Threading;
 using SharpDX.Direct2D1;
 using SharpDX.Mathematics.Interop;
 using ShootighLibrary;
@@ -17,23 +18,7 @@ namespace LineOfBattle
         {
             var lob = (LoB)game;
 
-            if ( lob.FrameCount % 100 == 0 ) {
-                var theta = 2 * Math.PI * lob.Rand.NextDouble();
-
-                lob.Enemies.Add(
-                    new Unit(
-                        lob,
-                        new DrawOptions(
-                            new Vector2( lob.Width * (float)lob.Rand.NextDouble(), lob.Height * (float)lob.Rand.NextDouble() ),
-                            5,
-                            new RawColor4( 1, 0, 0, 1 )
-                            ),
-                        1,
-                        pos => pos + new Vector2( (float)Math.Cos( theta ), (float)Math.Sin( theta ) )
-                        )
-                    );
-            }
-
+            SpawnEnemy( lob );
             MoveEnemies( lob );
             MoveAllies( lob );
             MoveAlliesShells( lob );
@@ -53,6 +38,17 @@ namespace LineOfBattle
         }
 
         #region 移動・判定・描画
+        private void SpawnEnemy( LoB lob )
+        {
+            if ( lob.FrameCount % 100 == 0 ) {
+                var randomPosition = new Vector2( lob.Width * (float)lob.Rand.NextDouble(), lob.Height * (float)lob.Rand.NextDouble() );
+                var drawOptions = new DrawOptions( randomPosition, 5, new RawColor4( 1, 0, 0, 1 ) );
+                var theta = 2 * Math.PI * lob.Rand.NextDouble();
+                Func< Vector2, Vector2 > motionRule = pos => pos + new Vector2( (float)Math.Cos( theta ), (float)Math.Sin( theta ) );
+                lob.Enemies.Add( new Unit( lob, drawOptions, 1, motionRule ) );
+            }
+        }
+
         private void MoveEnemies( LoB lob )
         {
             foreach ( var u in lob.Enemies ) {
@@ -87,13 +83,19 @@ namespace LineOfBattle
                 s.Move();
             }
 
-            for ( var i = lob.EnemiesShells.Count - 1; 0 <= i; i++ ) {
-                var x = lob.EnemiesShells[ i ].DrawOptions.Position.X;
-                var y = lob.EnemiesShells[ i ].DrawOptions.Position.Y;
+            var removeList = new List<Shell>();
+
+            foreach ( var s in lob.EnemiesShells ) {
+                var x = s.DrawOptions.Position.X;
+                var y = s.DrawOptions.Position.Y;
 
                 if ( x < -100 || lob.Width + 100 < x || y < -100 || lob.Height + 100 < y ) {
-                    lob.EnemiesShells.RemoveAt( i );
+                    removeList.Add( s );
                 }
+            }
+
+            foreach ( var s in removeList ) {
+                lob.EnemiesShells.Remove( s );
             }
         }
 
