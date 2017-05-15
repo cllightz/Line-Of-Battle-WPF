@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using SharpDX.Direct2D1;
@@ -23,7 +24,7 @@ namespace LineOfBattle
                     new Unit(
                         lob,
                         new DrawOptions(
-                            new Vector2( lob.Width / 2, lob.Height / 2 ),
+                            new Vector2( lob.Width * (float)lob.Rand.NextDouble(), lob.Height * (float)lob.Rand.NextDouble() ),
                             5,
                             new RawColor4( 1, 0, 0, 1 )
                             ),
@@ -42,6 +43,7 @@ namespace LineOfBattle
             CalculateAlliesShellsCollision( lob );
             CalculateEnemiesShellsCollision( lob );
 
+            DrawNeutrals( lob, target );
             DrawEnemies( lob, target );
             DrawAllies( lob, target );
             DrawAlliesShells( lob, target );
@@ -109,13 +111,43 @@ namespace LineOfBattle
             }
         }
 
-        private void CalculateAlliesShellsCollision( LoB lob ) { }
+        private void CalculateAlliesShellsCollision( LoB lob )
+        {
+            var collidedShells = new List<Shell>();
+            var collidedUnits = new List<Unit>();
+
+            foreach ( var s in lob.AlliesShells ) {
+                foreach ( var u in lob.Enemies ) {
+                    if ( Vector2.Distance( s.DrawOptions.Position, u.DrawOptions.Position ) < s.DrawOptions.Size + u.DrawOptions.Size ) {
+                        collidedShells.Add( s );
+                        collidedUnits.Add( u );
+                    }
+                }
+            }
+
+            foreach ( var s in collidedShells ) {
+                lob.AlliesShells.Remove( s );
+            }
+
+            foreach ( var u in collidedUnits ) {
+                u.Neutralize();
+                lob.Neutrals.Add( u );
+                lob.Enemies.Remove( u );
+            }
+        }
 
         private void CalculateEnemiesShellsCollision( LoB lob ) { }
 
         private void DrawEnemies( LoB lob, RenderTarget target )
         {
             foreach ( var u in lob.Enemies ) {
+                u.Draw( target );
+            }
+        }
+
+        private void DrawNeutrals( LoB lob, RenderTarget target )
+        {
+            foreach ( var u in lob.Neutrals ) {
                 u.Draw( target );
             }
         }

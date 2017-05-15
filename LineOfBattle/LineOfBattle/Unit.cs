@@ -17,7 +17,7 @@ namespace LineOfBattle
         public float RoundsPerSecond;
         public float CoolDownTimer;
         public Func<Vector2, Vector2> MotionRule;
-        private Faction Faction;
+        public Faction Faction;
 
         #region Constructors
         /// <summary>
@@ -149,5 +149,11 @@ namespace LineOfBattle
             var brush = new SolidColorBrush( target, DrawOptions.Color );
             target.DrawEllipse( ellipse, brush );
         }
+
+        public void Neutralize()
+            => DrawOptions.Color = new RawColor4( 1, 1, 0, 1 );
+
+        public void Unite()
+            => DrawOptions.Color = new RawColor4( 0, 1, 0, 0 );
     }
 }
