@@ -138,7 +138,30 @@ namespace LineOfBattle
             }
         }
 
-        private void CalculateEnemiesShellsCollision( LoB lob ) { }
+        private void CalculateEnemiesShellsCollision( LoB lob )
+        {
+            var collidedShells = new List<Shell>();
+            var collidedUnits = new List<Unit>();
+
+            foreach ( var s in lob.EnemiesShells ) {
+                foreach ( var u in lob.Allies ) {
+                    if ( Vector2.Distance( s.DrawOptions.Position, u.DrawOptions.Position ) < s.DrawOptions.Size + u.DrawOptions.Size ) {
+                        collidedShells.Add( s );
+                        collidedUnits.Add( u );
+                    }
+                }
+            }
+
+            foreach ( var s in collidedShells ) {
+                lob.EnemiesShells.Remove( s );
+            }
+
+            foreach ( var u in collidedUnits ) {
+                u.Neutralize();
+                lob.Neutrals.Add( u );
+                lob.Allies.Units.Remove( u );
+            }
+        }
 
         private void DrawEnemies( LoB lob, RenderTarget target )
         {
