@@ -42,15 +42,16 @@ namespace LineOfBattle
         /// </summary>
         public override void Initialize()
         {
-            var drawoptions = new DrawOptions( new Vector2( Width / 2, Height / 2 ), 6, new RawColor4( 0, 1, 0, 1 ) );
+            Allies = new AlliesLine( this );
 
-            Allies = new AlliesLine( this ) {
-                new Unit( this, drawoptions.Clone, 10 ),
-                new Unit( this, drawoptions.Clone, 10 ),
-                new Unit( this, drawoptions.Clone, 10 ),
-                new Unit( this, drawoptions.Clone, 10 ),
-                new Unit( this, drawoptions.Clone, 10 ),
-            };
+            // 最初の味方Unitの初期化
+            var initialAlliesNum = 5;
+
+            for ( var i = 0; i < initialAlliesNum; i++ ) {
+                var initialPos = new Vector2( Width / 2, Height / 2 );
+                var drawoptions = new DrawOptions( initialPos, 6, new RawColor4( 0, 1, 0, 1 ) );
+                Allies.Add( new Unit( this, drawoptions.Clone, 10 ) );
+            }
         }
 
         /// <summary>
@@ -60,11 +61,11 @@ namespace LineOfBattle
         {
             Target = target;
 
-            foreach ( var schene in ScheneList ) {
+            ScheneList.ForEach( schene => {
                 if ( schene.Match( Schene ) ) {
                     schene.Execute( this, target );
                 }
-            }
+            } );
         }
     }
 }

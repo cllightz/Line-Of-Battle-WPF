@@ -125,8 +125,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="BattleSchene.cs" />
-    <Compile Include="Faction.cs" />
-    <Compile Include="Maneuver.cs" />
     <Compile Include="ISchene.cs" />
     <Compile Include="ScheneState.cs" />
     <Compile Include="Shell.cs" />

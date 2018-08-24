@@ -10,75 +10,114 @@ namespace LineOfBattle
 {
     class Unit : IDrawable
     {
+        /// <summary>
+        /// 陣営
+        /// </summary>
+        public enum Faction {
+            /// <summary>
+            /// 味方
+            /// </summary>
+            Ally,
+
+            /// <summary>
+            /// 中立
+            /// </summary>
+            Neutral,
+
+            /// <summary>
+            /// 敵
+            /// </summary>
+            Enemy
+        }
+
         private LoB Game;
         public DrawOptions DrawOptions { get; set; }
-        private const int HistoryLength = 20;
+
+        /// <summary>
+        /// 移動の軌跡
+        /// </summary>
         private List<Vector2> History;
+
+        /// <summary>
+        /// Historyに記録する座標の数
+        /// </summary>
+        private const int HistoryLength = 20;
+
+        /// <summary>
+        /// 1秒あたりの射撃回数
+        /// </summary>
         public float RoundsPerSecond;
+        
+        /// <summary>
+        /// 次の射撃までの時間[s]
+        /// </summary>
         public float CoolDownTimer;
+
+        /// <summary>
+        /// 毎フレームの移動ルール
+        /// </summary>
         public Func<Vector2, Vector2> MotionRule;
-        public Faction Faction;
 
-        #region Constructors
         /// <summary>
-        /// Constructor of ally unit.
+        /// ユニットの属する陣営
         /// </summary>
-        /// <param name="position"></param>
-        /// <param name="roundspersecond"></param>
-        /// <param name="size"></param>
-        /// <param name="color"></param>
-        public Unit( LoB game, DrawOptions drawoptions, float roundspersecond )
+        public Faction UnitFaction;
+
+        /// <summary>
+        /// 敵味方共通のコンストラクタ
+        /// </summary>
+        /// <param name="game"></param>
+        /// <param name="drawOptions"></param>
+        /// <param name="roundsPerSecond"></param>
+        /// <param name="motionRule"></param>
+        public Unit( LoB game, DrawOptions drawOptions, float roundsPerSecond, Func<Vector2, Vector2> motionRule = null )
         {
             Game = game;
-            DrawOptions = drawoptions;
+            DrawOptions = drawOptions;
             History = new List<Vector2>();
-            RoundsPerSecond = roundspersecond;
+            RoundsPerSecond = roundsPerSecond;
             CoolDownTimer = 0;
-            Faction = Faction.Ally;
+            MotionRule = motionRule;
+            UnitFaction = motionRule == null ? Faction.Ally : Faction.Enemy;
         }
 
         /// <summary>
-        /// Constructor of enemy unit.
+        /// AlliesLineの後続のUnitに渡せるだけの移動の軌跡を持っているか
         /// </summary>
-        /// <param name="position"></param>
-        /// <param name="roundspersecond"></param>
-        /// <param name="size"></param>
-        /// <param name="color"></param>
-        /// <param name="motionrule"></param>
-        public Unit( LoB game, DrawOptions drawoptions, float roundspersecond, Func<Vector2, Vector2> motionrule )
-        {
-            Game = game;
-            DrawOptions = drawoptions;
-            History = new List<Vector2>();
-            RoundsPerSecond = roundspersecond;
-            CoolDownTimer = 0;
-            MotionRule = motionrule;
-            Faction = Faction.Enemy;
-        }
-        #endregion
-
         public bool HasFollowPos
             => History.Count >= HistoryLength;
 
         #region Move Methods
+        /// <summary>
+        /// 移動ルールに従って移動
+        /// </summary>
         public void Move()
             => DrawOptions.Position = MotionRule( DrawOptions.Position );
 
-        public void Move( Vector2 newposition )
+        /// <summary>
+        /// 指定座標に移動
+        /// </summary>
+        /// <param name="newPosition"></param>
+        public void Move( Vector2 newPosition )
         {
             History.Add( DrawOptions.Position );
-            DrawOptions.Position = newposition;
+            DrawOptions.Position = newPosition;
         }
 
-        public void MoveV( Vector2 v, Maneuver maneuver )
+        /// <summary>
+        /// 指定
+        /// </summary>
+        /// <param name="v"></param>
+        /// <param name="maneuver"></param>
+        public void MoveV( Vector2 v, AlliesLine.Maneuver maneuver )
         {
             switch ( maneuver ) {
-                case Maneuver.Successively:
+                case AlliesLine.Maneuver.Successively:
                     History.Add( DrawOptions.Position );
                     DrawOptions.Position += v;
                     break;
 
-                case Maneuver.Simultaneously:
+                case AlliesLine.Maneuver.Simultaneously:
                     DrawOptions.Position += v;
 
                     for ( var i = 0; i < History.Count; i++ ) {
@@ -92,7 +131,7 @@ namespace LineOfBattle
 
         public void Shoot()
         {
-            switch ( Faction ) {
+            switch ( UnitFaction ) {
                 case Faction.Ally:
                     if ( Mouse.Any && CoolDownTimer <= 0 ) {
                         var cursor = Mouse.Position;
@@ -136,6 +175,10 @@ namespace LineOfBattle
             }
         }
 
+        /// <summary>
+        /// AlliesLineでの後続のUnitが移動すべき座標の取得
+        /// </summary>
+        /// <returns></returns>
         public Vector2 GetFollowPos()
         {
             var res = History.First();
@@ -143,6 +186,10 @@ namespace LineOfBattle
             return res;
         }
 
+        /// <summary>
+        /// 描画
+        /// </summary>
+        /// <param name="target"></param>
         public void Draw( RenderTarget target )
         {
             var ellipse = new Ellipse( DrawOptions.Position.ToRawVector2(), DrawOptions.Size, DrawOptions.Size );

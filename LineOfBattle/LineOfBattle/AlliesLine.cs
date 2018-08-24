@@ -9,6 +9,21 @@ namespace LineOfBattle
 {
     class AlliesLine : IEnumerable<Unit>
     {
+        /// <summary>
+        /// AlliesLineの各Unitの移動方法
+        /// </summary>
+        public enum Maneuver {
+            /// <summary>
+            /// 逐次回頭
+            /// </summary>
+            Successively,
+
+            /// <summary>
+            /// 一斉回頭
+            /// </summary>
+            Simultaneously
+        }
+
         private LoB Game;
         public List<Unit> Units { get; private set; }
         private Queue<Unit> UnitAdditionQueue;
@@ -21,9 +36,16 @@ namespace LineOfBattle
             UnitAdditionQueue = new Queue<Unit>();
         }
 
+        /// <summary>
+        /// 中立Unitの味方Unitへの追加待ちキューへのエンキュー
+        /// </summary>
+        /// <param name="u"></param>
         public void Add( Unit u )
             => UnitAdditionQueue.Enqueue( u );
 
+        /// <summary>
+        /// 移動
+        /// </summary>
         public void Move()
         {
             if ( Units.Any() && Key.AnyDirection && CanMove ) {
@@ -48,6 +70,9 @@ namespace LineOfBattle
             }
         }
 
+        /// <summary>
+        /// 移動しようとする方向に移動可能かどうか
+        /// </summary>
         public bool CanMove
         {
             get {
@@ -80,7 +105,12 @@ namespace LineOfBattle
                 return false;
             }
         }
-
+        
+        /// <summary>
+        /// 移動可能エリアを考慮した移動方向の計算
+        /// </summary>
+        /// <param name="u"></param>
+        /// <returns></returns>
         public Vector2 GetCorrectedDirection( Unit u )
         {
             float to1( float f ) => f < 0 ? -1 : f > 0 ? 1 : 0;
@@ -100,12 +130,12 @@ namespace LineOfBattle
             return Speed * Key.Direction;
         }
 
+        /// <summary>
+        /// 描画
+        /// </summary>
+        /// <param name="target"></param>
         public void Draw( RenderTarget target )
-        {
-            foreach ( var u in Units ) {
-                u.Draw( target );
-            }
-        }
+            => Units.ForEach( unit => unit.Draw( target ) );
 
         #region IEnumerableの実装
         public IEnumerator<Unit> GetEnumerator() => Units.GetEnumerator();
