@@ -128,6 +128,10 @@
     <Compile Include="Faction.cs" />
     <Compile Include="Maneuver.cs" />
     <Compile Include="ISchene.cs" />
+    <Compile Include="Messenger\Broker.cs" />
+    <Compile Include="Messenger\IChannel.cs" />
+    <Compile Include="Messenger\IMessage.cs" />
+    <Compile Include="Messenger\ImmediateFiringChannel.cs" />
     <Compile Include="ScheneState.cs" />
     <Compile Include="Shell.cs" />
     <Compile Include="TitleSchene.cs" />
