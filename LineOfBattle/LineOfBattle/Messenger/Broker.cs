@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace LineOfBattle.Messenger
 {
@@ -10,16 +8,46 @@ namespace LineOfBattle.Messenger
     {
         internal Broker Singleton = new Broker();
 
-        internal void Subscribe<TSubscriber, TArgs>( Action<TArgs> callback )
+        private Dictionary<Type, object> _channels = new Dictionary<Type, object>();
+
+        internal void RegisterPublisher<TArgs>( Type publisherType )
         {
-            if ( !_channels.ContainsKey( typeof(TArgs) ) ) {
-                // Subscriberがいない場合
-                _channels[typeof(TArgs)] = new ImmediateFiringChannel<TArgs>();
+            try {
+                ((IChannel<TArgs>)_channels[ typeof( TArgs ) ]).AddPublisher<TArgs>();
+            } catch ( KeyNotFoundException ) {
+                // TArgs のチャンネルが初期化されていない場合
+                var channel = new ImmediateFiringChannel<TArgs>();
+                channel.AddPublisher<TArgs>();
+                _channels[ typeof( TArgs ) ] = channel;
+            } catch ( InvalidCastException e ) {
+                Debug.WriteLine( $"Broker.RegisterPublisher<{publisherType.FullName}, {typeof( TArgs ).FullName}>() において、object→IChannel<{typeof( TArgs ).FullName}> のキャストに失敗しました。\nobject: {_channels[ typeof( TArgs ) ]}" );
+                throw e;
             }
         }
 
-        // 追記する
+        internal void Publish<TArgs>( Type publisherType, TArgs args )
+        {
+            try {
+                ((IChannel<TArgs>)_channels[ typeof( TArgs ) ]).MulticastToSubscribers( new Message<TArgs>( publisherType, args ) );
+            } catch ( KeyNotFoundException ) {
+                // TArgs のチャンネルが初期化されていない場合
+                // 何もしない
+            }
+        }
 
-        private Dictionary<Type, object> _channels = new Dictionary<Type, object>();
+        internal void Subscribe<TArgs>( Type subscriberType, Action<TArgs> callback )
+        {
+            try {
+                ((IChannel<TArgs>)_channels[ typeof( TArgs ) ]).AddSubscriber<TArgs>( callback );
+            } catch ( KeyNotFoundException ) {
+                // TArgs のチャンネルが初期化されていない場合
+                var channel = new ImmediateFiringChannel<TArgs>();
+                channel.AddPublisher<TArgs>();
+                _channels[ typeof( TArgs ) ] = channel;
+            } catch ( InvalidCastException e ) {
+                Debug.WriteLine( $"Broker.RegisterPublisher<{subscriberType.FullName}, {typeof( TArgs ).FullName}>() において、object→IChannel<{typeof( TArgs ).FullName}> のキャストに失敗しました。\nobject: {_channels[ typeof( TArgs ) ]}" );
+                throw e;
+            }
+        }
     }
 }
