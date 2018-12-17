@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using LineOfBattle.Scenes;
 using SharpDX.Direct2D1;
 using SharpDX.Mathematics.Interop;
 using ShootighLibrary;
@@ -10,7 +11,7 @@ namespace LineOfBattle
 {
     class Unit : IDrawable
     {
-        private LoB Game;
+        private BattleScene _scene;
         public DrawOptions DrawOptions { get; set; }
         private const int HistoryLength = 20;
         private List<Vector2> History;
@@ -27,9 +28,9 @@ namespace LineOfBattle
         /// <param name="roundspersecond"></param>
         /// <param name="size"></param>
         /// <param name="color"></param>
-        public Unit( LoB game, DrawOptions drawoptions, float roundspersecond )
+        public Unit( BattleScene scene, DrawOptions drawoptions, float roundspersecond )
         {
-            Game = game;
+            _scene = scene;
             DrawOptions = drawoptions;
             History = new List<Vector2>();
             RoundsPerSecond = roundspersecond;
@@ -45,9 +46,9 @@ namespace LineOfBattle
         /// <param name="size"></param>
         /// <param name="color"></param>
         /// <param name="motionrule"></param>
-        public Unit( LoB game, DrawOptions drawoptions, float roundspersecond, Func<Vector2, Vector2> motionrule )
+        public Unit( BattleScene scene, DrawOptions drawoptions, float roundspersecond, Func<Vector2, Vector2> motionrule )
         {
-            Game = game;
+            _scene = scene;
             DrawOptions = drawoptions;
             History = new List<Vector2>();
             RoundsPerSecond = roundspersecond;
@@ -97,13 +98,13 @@ namespace LineOfBattle
                     if ( Mouse.Any && CoolDownTimer <= 0 ) {
                         var cursor = Mouse.Position;
                         var posL = DrawOptions.Position;
-                        var posR = Game.Allies.Units.First().DrawOptions.Position;
+                        var posR = _scene.Allies.Units.First().DrawOptions.Position;
                         var posLR = (posL + posR) / 2;
                         var pos = Mouse.Left ? (Mouse.Right ? posLR : posL) : (Mouse.Right ? posR : throw new InvalidOperationException());
                         var direction = (cursor - pos).Versor();
                         var velocity = 5 * direction; // TODO: 速度の係数をフィールドまたはプロパティにする。
                         var drawoptions = new DrawOptions( DrawOptions.Position, 5, new RawColor4( 0, 1, 1, 1 ) );
-                        Game.AlliesShells.Add( new Shell( drawoptions, velocity ) );
+                        _scene.AlliesShells.Add( new Shell( drawoptions, velocity ) );
 
                         CoolDownTimer += 1.0f / RoundsPerSecond;
                     } else {
@@ -117,11 +118,11 @@ namespace LineOfBattle
                     if ( CoolDownTimer <= 0 ) {
                         Vector2 radtovector2( double rad ) { return new Vector2( (float)Math.Cos( rad ), (float)Math.Sin( rad ) ); };
 
-                        var theta = 2 * Math.PI * Game.Rand.NextDouble();
+                        var theta = 2 * Math.PI * _scene.Rand.NextDouble();
                         var direction = radtovector2( theta ).Versor();
                         var velocity = 5 * direction; // TODO: 速度の係数をフィールドまたはプロパティにする。
                         var drawoptions = new DrawOptions( DrawOptions.Position, 5, new RawColor4( 1, 0.5f, 0, 1 ) );
-                        Game.EnemiesShells.Add( new Shell( drawoptions, velocity ) );
+                        _scene.EnemiesShells.Add( new Shell( drawoptions, velocity ) );
 
                         CoolDownTimer += 1.0f / RoundsPerSecond;                           
                     } else {

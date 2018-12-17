@@ -9,7 +9,7 @@ namespace LineOfBattle.ViewModels
     public class UIViewModel
     {
         public string Test { get; set; } = "バインディング";
-        public object SceneViewModel;
+        public object SceneViewModel { get; set; } = new TitleSceneUIViewModel();
 
         public UIViewModel()
         {

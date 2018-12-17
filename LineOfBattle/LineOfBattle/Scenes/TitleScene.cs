@@ -3,12 +3,13 @@ using SharpDX.Direct2D1;
 using SharpDX.Mathematics.Interop;
 using ShootighLibrary;
 
-namespace LineOfBattle
+namespace LineOfBattle.Scenes
 {
-    class TitleSchene : ISchene<ScheneState>
+    class TitleScene : SceneBase
     {
-        public bool Match( ScheneState schene )
-            => schene == ScheneState.Title;
+        public TitleScene() : base()
+        {
+        }
 
         public void Execute( Game game, RenderTarget target )
         {
@@ -21,8 +22,10 @@ namespace LineOfBattle
                 .Draw( target );
 
             if ( Mouse.Left ) {
-                ((LoB)game).Schene = ScheneState.Battle;
+                game.TransitScene<BattleScene>();
             }
         }
+
+        public void Dispose() { }
     }
 }

@@ -1,6 +1,6 @@
-﻿using LineOfBattle.Messenger;
-using LineOfBattle.ViewModels;
+﻿using LineOfBattle.ViewModels;
 using ShootighLibrary;
+using ShootighLibrary.Messenger;
 using System.Windows;
 
 namespace LineOfBattle.Views

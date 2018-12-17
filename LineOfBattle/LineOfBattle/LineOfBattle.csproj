@@ -115,21 +115,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="BattleSchene.cs" />
+    <Compile Include="Models\TitleSceneUIModel.cs" />
+    <Compile Include="Models\UIModel.cs" />
+    <Compile Include="Scenes\BattleScene.cs" />
     <Compile Include="Faction.cs" />
     <Compile Include="Maneuver.cs" />
-    <Compile Include="ISchene.cs" />
-    <Compile Include="Messenger\Mediator.cs" />
-    <Compile Include="Messenger\IChannel.cs" />
-    <Compile Include="Messenger\IMessage.cs" />
-    <Compile Include="Messenger\ImmediateFiringChannel.cs" />
-    <Compile Include="Messenger\Message.cs" />
-    <Compile Include="Messenger\PublisherNotRegisteredException.cs" />
-    <Compile Include="ScheneState.cs" />
     <Compile Include="Shell.cs" />
-    <Compile Include="TitleSchene.cs" />
+    <Compile Include="Scenes\TitleScene.cs" />
     <Compile Include="Unit.cs" />
     <Compile Include="ViewModels\BattleSceneUIViewModel.cs" />
+    <Compile Include="ViewModels\TitleSceneUIViewModel.cs" />
     <Compile Include="ViewModels\UIViewModel.cs" />
     <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using LineOfBattle.Scenes;
 using SharpDX.Direct2D1;
 using ShootighLibrary;
 
@@ -9,14 +10,14 @@ namespace LineOfBattle
 {
     class AlliesLine : IEnumerable<Unit>
     {
-        private LoB Game;
+        private BattleScene _scene;
         public List<Unit> Units { get; private set; }
         private Queue<Unit> UnitAdditionQueue;
         public const float Speed = 2.0f;
 
-        public AlliesLine( LoB game )
+        public AlliesLine( BattleScene scene )
         {
-            Game = game;
+            _scene = scene;
             Units = new List<Unit>();
             UnitAdditionQueue = new Queue<Unit>();
         }
@@ -53,27 +54,27 @@ namespace LineOfBattle
             get {
                 (var x, var y) = (Units[ 0 ].DrawOptions.Position + Speed * Key.Direction).Tuple();
 
-                if ( Game.Left <= x && x <= Game.Right && Game.Top <= y && y <= Game.Bottom ) {
+                if ( _scene.Left <= x && x <= _scene.Right && _scene.Top <= y && y <= _scene.Bottom ) {
                     return true;
                 }
 
-                if ( !(Game.Left <= x && x <= Game.Right || Game.Top <= y && y <= Game.Bottom) ) {
+                if ( !(_scene.Left <= x && x <= _scene.Right || _scene.Top <= y && y <= _scene.Bottom) ) {
                     return false;
                 }
 
-                if ( Key.A && (Key.W || Key.S) && x < Game.Left ) {
+                if ( Key.A && (Key.W || Key.S) && x < _scene.Left ) {
                     return true;
                 }
 
-                if ( Key.D && (Key.W || Key.S) && Game.Right < x ) {
+                if ( Key.D && (Key.W || Key.S) && _scene.Right < x ) {
                     return true;
                 }
 
-                if ( Key.W && (Key.A || Key.D) && y < Game.Top ) {
+                if ( Key.W && (Key.A || Key.D) && y < _scene.Top ) {
                     return true;
                 }
 
-                if ( Key.S && (Key.A || Key.D) && Game.Left < y ) {
+                if ( Key.S && (Key.A || Key.D) && _scene.Left < y ) {
                     return true;
                 }
 
@@ -89,11 +90,11 @@ namespace LineOfBattle
             var x = newposition.X;
             var y = newposition.Y;
 
-            if ( x < Game.Left || Game.Right < x ) {
+            if ( x < _scene.Left || _scene.Right < x ) {
                 return new Vector2( 0, Speed * to1( Key.Direction.Y ) );
             }
 
-            if ( y < Game.Top || Game.Bottom < y ) {
+            if ( y < _scene.Top || _scene.Bottom < y ) {
                 return new Vector2( Speed * to1( Key.Direction.X ), 0 );
             }
 
