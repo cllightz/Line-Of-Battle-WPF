@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Numerics;
+using LineOfBattle.Messenger;
 using SharpDX.Direct2D1;
 using SharpDX.Mathematics.Interop;
 using ShootighLibrary;
@@ -13,7 +14,15 @@ namespace LineOfBattle
     class LoB : Game
     {
         #region Fields
+        public static LoB Instance = null;
+
+        private static Mediator _subscription = Mediator.Singleton.Subscribe<GameControl>( typeof( LoB ), control => {
+            Instance = new LoB( control );
+            control.SetGameInstance( Instance );
+        } );
+
         private RenderTarget Target;
+
         public Random Rand = new Random();
         public ulong FrameCount = 0;
 
