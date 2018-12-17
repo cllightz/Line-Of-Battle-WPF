@@ -10,7 +10,7 @@ namespace LineOfBattle.Messenger
 
         private Dictionary<Type, object> _channels = new Dictionary<Type, object>();
 
-        internal void RegisterPublisher<TArgs>( Type publisherType )
+        internal Mediator RegisterPublisher<TArgs>( Type publisherType )
         {
             try {
                 ((IChannel<TArgs>)_channels[ typeof( TArgs ) ]).AddPublisher<TArgs>();
@@ -23,9 +23,11 @@ namespace LineOfBattle.Messenger
                 Debug.WriteLine( $"{nameof( Mediator )}.{nameof( RegisterPublisher )}<{publisherType.FullName}, {typeof( TArgs ).FullName}>() において、object→IChannel<{typeof( TArgs ).FullName}> のキャストに失敗しました。\nobject: {_channels[ typeof( TArgs ) ]}" );
                 throw e;
             }
+
+            return this;
         }
 
-        internal void Publish<TArgs>( Type publisherType, TArgs args )
+        internal Mediator Publish<TArgs>( Type publisherType, TArgs args )
         {
             try {
                 ((IChannel<TArgs>)_channels[ typeof( TArgs ) ]).MulticastToSubscribers( new Message<TArgs>( publisherType, args ) );
@@ -33,9 +35,11 @@ namespace LineOfBattle.Messenger
                 // TArgs のチャンネルが初期化されていない場合
                 // 何もしない
             }
+
+            return this;
         }
 
-        internal void Subscribe<TArgs>( Type subscriberType, Action<TArgs> callback )
+        internal Mediator Subscribe<TArgs>( Type subscriberType, Action<TArgs> callback )
         {
             try {
                 ((IChannel<TArgs>)_channels[ typeof( TArgs ) ]).AddSubscriber<TArgs>( callback );
@@ -48,6 +52,8 @@ namespace LineOfBattle.Messenger
                 Debug.WriteLine( $"Broker.RegisterPublisher<{subscriberType.FullName}, {typeof( TArgs ).FullName}>() において、object→IChannel<{typeof( TArgs ).FullName}> のキャストに失敗しました。\nobject: {_channels[ typeof( TArgs ) ]}" );
                 throw e;
             }
+
+            return this;
         }
     }
 }
