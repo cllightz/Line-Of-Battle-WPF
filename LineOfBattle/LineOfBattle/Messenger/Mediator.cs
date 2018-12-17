@@ -6,7 +6,10 @@ namespace LineOfBattle.Messenger
 {
     internal class Mediator // : IMediator
     {
-        internal static Mediator Singleton = new Mediator();
+        private static Mediator _singleton = null;
+        internal static Mediator Singleton => _singleton ?? (_singleton = new Mediator());
+
+        private Mediator() { }
 
         private Dictionary<Type, object> _channels = new Dictionary<Type, object>();
 
