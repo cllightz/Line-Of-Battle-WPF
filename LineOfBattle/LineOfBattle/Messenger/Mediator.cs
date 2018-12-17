@@ -4,9 +4,9 @@ using System.Diagnostics;
 
 namespace LineOfBattle.Messenger
 {
-    internal class Broker // : IBroker
+    internal class Mediator // : IMediator
     {
-        internal Broker Singleton = new Broker();
+        internal static Mediator Singleton = new Mediator();
 
         private Dictionary<Type, object> _channels = new Dictionary<Type, object>();
 
@@ -20,7 +20,7 @@ namespace LineOfBattle.Messenger
                 channel.AddPublisher<TArgs>();
                 _channels[ typeof( TArgs ) ] = channel;
             } catch ( InvalidCastException e ) {
-                Debug.WriteLine( $"Broker.RegisterPublisher<{publisherType.FullName}, {typeof( TArgs ).FullName}>() において、object→IChannel<{typeof( TArgs ).FullName}> のキャストに失敗しました。\nobject: {_channels[ typeof( TArgs ) ]}" );
+                Debug.WriteLine( $"{nameof( Mediator )}.{nameof( RegisterPublisher )}<{publisherType.FullName}, {typeof( TArgs ).FullName}>() において、object→IChannel<{typeof( TArgs ).FullName}> のキャストに失敗しました。\nobject: {_channels[ typeof( TArgs ) ]}" );
                 throw e;
             }
         }
