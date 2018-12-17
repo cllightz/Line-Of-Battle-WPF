@@ -5,14 +5,10 @@ namespace LineOfBattle.Messenger
 {
     interface IChannel<TArgs>
     {
-        void AddSubscriber<TSubscriber>( Action<TArgs> callback );
-
-        IEnumerable<Type> EnumerateSubscribers();
-
-        void AddPublisher<TPublisher>();
-
+        void AddPublisher( Type publisherType );
+        void AddSubscriber( Type subscriberType, Action<TArgs> callback );
         IEnumerable<Type> EnumeratePublishers();
-
+        IEnumerable<Type> EnumerateSubscribers();
         void MulticastToSubscribers( IMessage<TArgs> message );
     }
 }

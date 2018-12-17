@@ -13,11 +13,11 @@ namespace LineOfBattle.Messenger
         private HashSet<Type> _publishers = new HashSet<Type>();
         private List<(Type SubscriberType, Action<TArgs> Callback)> _subscribers = new List<(Type, Action<TArgs>)>();
 
-        public void AddPublisher<TPublisher>()
-            => _publishers.Add( typeof( TPublisher ) );
+        public void AddPublisher( Type publisherType )
+            => _publishers.Add( publisherType );
 
-        public void AddSubscriber<TSubscriber>( Action<TArgs> callback )
-            => _subscribers.Add( (typeof( TSubscriber ), callback) );
+        public void AddSubscriber( Type subscriberType, Action<TArgs> callback )
+            => _subscribers.Add( (subscriberType, callback) );
 
         public IEnumerable<Type> EnumeratePublishers()
             => _publishers;

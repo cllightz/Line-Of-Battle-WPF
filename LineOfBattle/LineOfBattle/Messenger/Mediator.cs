@@ -16,15 +16,15 @@ namespace LineOfBattle.Messenger
         internal Mediator RegisterPublisher<TArgs>( Type publisherType )
         {
             try {
-                ((IChannel<TArgs>)_channels[ typeof( TArgs ) ]).AddPublisher<TArgs>();
+                ((IChannel<TArgs>)_channels[ typeof( TArgs ) ]).AddPublisher( publisherType );
             } catch ( KeyNotFoundException ) {
                 // TArgs のチャンネルが初期化されていない場合
                 var channel = new ImmediateFiringChannel<TArgs>();
-                channel.AddPublisher<TArgs>();
+                channel.AddPublisher( publisherType );
                 _channels[ typeof( TArgs ) ] = channel;
-            } catch ( InvalidCastException e ) {
-                Debug.WriteLine( $"{nameof( Mediator )}.{nameof( RegisterPublisher )}<{publisherType.FullName}, {typeof( TArgs ).FullName}>() において、object→IChannel<{typeof( TArgs ).FullName}> のキャストに失敗しました。\nobject: {_channels[ typeof( TArgs ) ]}" );
-                throw e;
+            } catch ( InvalidCastException ) {
+                Debug.WriteLine( $"{nameof( Mediator )}.{nameof( RegisterPublisher )}<{typeof( TArgs ).FullName}>() において、object→IChannel<{typeof( TArgs ).FullName}> のキャストに失敗しました。\nobject: {_channels[ typeof( TArgs ) ]}" );
+                throw;
             }
 
             return this;
@@ -45,15 +45,15 @@ namespace LineOfBattle.Messenger
         internal Mediator Subscribe<TArgs>( Type subscriberType, Action<TArgs> callback )
         {
             try {
-                ((IChannel<TArgs>)_channels[ typeof( TArgs ) ]).AddSubscriber<TArgs>( callback );
+                ((IChannel<TArgs>)_channels[ typeof( TArgs ) ]).AddSubscriber( subscriberType, callback );
             } catch ( KeyNotFoundException ) {
                 // TArgs のチャンネルが初期化されていない場合
                 var channel = new ImmediateFiringChannel<TArgs>();
-                channel.AddPublisher<TArgs>();
+                channel.AddSubscriber( subscriberType, callback );
                 _channels[ typeof( TArgs ) ] = channel;
-            } catch ( InvalidCastException e ) {
-                Debug.WriteLine( $"Broker.RegisterPublisher<{subscriberType.FullName}, {typeof( TArgs ).FullName}>() において、object→IChannel<{typeof( TArgs ).FullName}> のキャストに失敗しました。\nobject: {_channels[ typeof( TArgs ) ]}" );
-                throw e;
+            } catch ( InvalidCastException ) {
+                Debug.WriteLine( $"{nameof( Mediator )}.{nameof( Subscribe )}<{typeof( TArgs ).FullName}>() において、object→IChannel<{typeof( TArgs ).FullName}> のキャストに失敗しました。\nobject: {_channels[ typeof( TArgs ) ]}" );
+                throw;
             }
 
             return this;
