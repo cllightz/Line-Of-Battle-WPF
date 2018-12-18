@@ -1,19 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ShootighLibrary.MVVM;
 
 namespace LineOfBattle.Models
 {
-    internal class TitleSceneUIModel : INotifyPropertyChanged
+    internal class TitleSceneUIModel : ModelBase
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        internal TitleSceneUIModel()
-        {
-
-        }
     }
 }

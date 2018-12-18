@@ -1,6 +1,8 @@
-﻿namespace LineOfBattle.ViewModels
+﻿using ShootighLibrary.MVVM;
+
+namespace LineOfBattle.ViewModels
 {
-    public class BattleSceneUIViewModel
+    public class BattleSceneUIViewModel : ViewModelBase
     {
         public int Score { get; set; }
     }

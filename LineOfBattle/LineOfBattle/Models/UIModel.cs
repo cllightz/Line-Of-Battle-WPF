@@ -1,21 +1,43 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ShootighLibrary.Messenger;
+using ShootighLibrary.MVVM;
+using System;
 
 namespace LineOfBattle.Models
 {
-    internal class UIModel : INotifyPropertyChanged
+    internal class UIModel : ModelBase
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-
         private static UIModel _singleton;
-        internal static UIModel Singleton => _singleton ?? new UIModel();
+        internal static UIModel Singleton => _singleton ?? (_singleton = new UIModel());
 
-        internal object SceneModelInstance;
+        private static ModelBase _sceneUIModel;
+        internal ModelBase SceneUIModel {
+            get => _sceneUIModel;
+            private set => SetProperty( ref _sceneUIModel, value );
+        }
 
-        private UIModel() { }
+        private UIModel()
+            => Mediator.Singleton.Subscribe( typeof( UIModel ), new Action<string>( TransitUIModel ) );
+
+        private void TransitUIModel( string sceneName )
+        {
+            SceneUIModel?.Dispose();
+
+            switch ( sceneName ) {
+                case "TitleScene":
+                    SceneUIModel = new TitleSceneUIModel();
+                    break;
+
+                case "BattleScene":
+                    SceneUIModel = new BattleSceneUIModel();
+                    break;
+
+                case "ResultScene":
+                    SceneUIModel = new ResultSceneUIModel();
+                    break;
+
+                default:
+                    throw new InvalidOperationException( $"Unknown scene name \"{sceneName}\" used at {nameof( UIModel )}.{nameof( TransitUIModel )}()." );
+            }
+        }
     }
 }

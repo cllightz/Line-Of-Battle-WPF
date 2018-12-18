@@ -72,10 +72,9 @@ namespace LineOfBattle.Scenes
             };
         }
 
-        public override void Execute( Game game, RenderTarget target )
+        protected override void Execute( RenderTarget target )
         {
-            base.Execute( game, target );
-            var lob = (LoB)game;
+            var lob = (LoB)GameInstance;
 
             SpawnEnemy();
             MoveEnemies();
@@ -250,8 +249,6 @@ namespace LineOfBattle.Scenes
                 s.Draw( target );
             }
         }
-
-        public void Dispose() { }
         #endregion
     }
 }

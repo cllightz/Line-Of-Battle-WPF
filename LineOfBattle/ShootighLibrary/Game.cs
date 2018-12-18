@@ -17,6 +17,7 @@ namespace ShootighLibrary
         /// 抽象クラス Game を実装するクラスのインスタンスの親インスタンスにあたる。
         /// </summary>
         public GameControl Control;
+        protected RenderTarget Target;
         #endregion
 
         #region Constuctor
@@ -25,11 +26,14 @@ namespace ShootighLibrary
         /// </summary>
         /// <param name="control"></param>
         public Game( GameControl control )
-            => Control = control;
+        {
+            Control = control;
+            Mediator.Singleton.RegisterPublisher<string>( typeof( Game ) );
+        }
         #endregion
 
         #region Properties
-        public SceneBase CurrentScene { get; protected set; }
+        public SceneBase CurrentScene { get; private set; }
 
         /// <summary>
         /// 描画領域の横幅。
@@ -64,9 +68,10 @@ namespace ShootighLibrary
 
             try {
                 CurrentScene = new TNewScene();
-                oldScene.Dispose();
-                Mediator.Singleton.Publish( typeof( Game ), typeof( TNewScene ) );
-                Debug.WriteLine( $"Scene Transition: from {oldScene.GetType().FullName} to {typeof( TNewScene ).FullName}" );
+                oldScene?.Dispose();
+                Mediator.Singleton.Publish( typeof( Game ), typeof( TNewScene ).Name );
+                CurrentScene?.Initialize( this );
+                Debug.WriteLine( $"Scene Transition: from {oldScene?.GetType().FullName ?? "null"} to {typeof( TNewScene ).FullName}" );
             } catch ( Exception e ) {
                 Debug.WriteLine( $"Exception Occurred in {nameof( Game )}.{nameof( TransitScene )}<{typeof( TNewScene ).FullName}>();\ne: {e}" );
                 throw;

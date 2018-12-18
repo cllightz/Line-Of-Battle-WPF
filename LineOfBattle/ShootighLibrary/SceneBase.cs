@@ -11,12 +11,18 @@ namespace ShootighLibrary
 
         public SceneBase() { }
 
+        public void Initialize( Game game )
+            => GameInstance = game;
+
         // リソースの参照も渡す
-        public virtual void Execute( Game game, RenderTarget target )
+        public void Execute( Game game, RenderTarget target )
         {
             GameInstance = game;
             FrameCount++;
+            Execute( target );
         }
+
+        protected abstract void Execute( RenderTarget target );
 
         public void Dispose() { }
     }

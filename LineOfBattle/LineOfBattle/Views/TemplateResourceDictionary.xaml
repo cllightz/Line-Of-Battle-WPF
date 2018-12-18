@@ -3,7 +3,7 @@
                     xmlns:vm="clr-namespace:LineOfBattle.ViewModels"
                     >
 
-    <DataTemplate x:Key="TitleSceneUITemplate"
+    <!--<DataTemplate x:Key="TitleSceneUITemplate"
                   DataType="{x:Type vm:TitleSceneUIViewModel}"
                   >
         <DockPanel>
@@ -24,6 +24,6 @@
                 <TextBlock Text="{Binding Score}" Foreground="White" />
             </StackPanel>
         </DockPanel>
-    </DataTemplate>
+    </DataTemplate>-->
 
 </ResourceDictionary>

@@ -16,10 +16,9 @@ namespace LineOfBattle.Views
         public MainWindow()
         {
             InitializeComponent();
-            
-            Mediator.Singleton.RegisterPublisher<GameControl>( typeof( MainWindow ) )
-                              .Publish( typeof( MainWindow ), Graphics );
-            
+
+            var lob = new LoB( Graphics );
+            Graphics.SetGameInstance( new LoB( Graphics ) );
             Graphics.SetEventHandlers( this );
             DataContext = new UIViewModel();
         }

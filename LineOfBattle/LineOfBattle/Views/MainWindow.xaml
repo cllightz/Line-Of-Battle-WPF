@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:v="clr-namespace:LineOfBattle.Views"
         xmlns:vm="clr-namespace:LineOfBattle.ViewModels"
         xmlns:sl="clr-namespace:ShootighLibrary;assembly=ShootighLibrary"
         mc:Ignorable="d"
@@ -12,12 +11,41 @@
         d:DesignHeight="480"
         >
     
-    <Window.DataContext>
+    <!--<Window.DataContext>
         <vm:UIViewModel />
-    </Window.DataContext>
+    </Window.DataContext>-->
 
-    <Grid>
-        <sl:GameControl x:Name="Graphics" Panel.ZIndex="-100" />
-        <ContentControl x:Name="UI" Content="{Binding SceneViewModel}" />
-    </Grid>
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Views/TemplateResourceDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <!--<Grid>-->
+        <sl:GameControl x:Name="Graphics" />
+        <!--<ContentControl x:Name="UI" Content="{Binding SceneUIViewModel.Value}">
+            <ContentControl.Resources>
+                <DataTemplate DataType="{x:Type vm:TitleSceneUIViewModel}">
+                    <DockPanel>
+                        <StackPanel DockPanel.Dock="Right">
+                            <StackPanel VerticalAlignment="Center">
+                                <TextBlock Text="{Binding Title}" Foreground="Yellow" />
+                                <TextBlock Text="{Binding Prompt}" Foreground="Yellow" />
+                            </StackPanel>
+                        </StackPanel>
+                    </DockPanel>
+                </DataTemplate>
+
+                <DataTemplate DataType="{x:Type vm:BattleSceneUIViewModel}">
+                    <DockPanel>
+                        <StackPanel DockPanel.Dock="Right">
+                            <TextBlock Text="{Binding Score}" Foreground="White" />
+                        </StackPanel>
+                    </DockPanel>
+                </DataTemplate>
+            </ContentControl.Resources>
+        </ContentControl>-->
+    <!--</Grid>-->
 </Window>
