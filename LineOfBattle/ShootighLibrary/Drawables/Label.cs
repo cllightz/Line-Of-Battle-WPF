@@ -2,7 +2,7 @@
 using SharpDX.DirectWrite;
 using SharpDX.Mathematics.Interop;
 
-namespace ShootighLibrary
+namespace ShootighLibrary.Drawables
 {
     /// <summary>
     /// 文字列を GameControl 上に表示するためのクラス。

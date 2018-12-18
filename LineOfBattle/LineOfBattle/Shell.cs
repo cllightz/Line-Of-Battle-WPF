@@ -1,6 +1,7 @@
 ﻿using System.Numerics;
 using SharpDX.Direct2D1;
-using ShootighLibrary;
+using ShootighLibrary.Drawables;
+using ShootighLibrary.Extensions;
 
 namespace LineOfBattle
 {

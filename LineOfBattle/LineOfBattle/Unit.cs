@@ -5,7 +5,9 @@ using System.Numerics;
 using LineOfBattle.Scenes;
 using SharpDX.Direct2D1;
 using SharpDX.Mathematics.Interop;
-using ShootighLibrary;
+using ShootighLibrary.Device;
+using ShootighLibrary.Drawables;
+using ShootighLibrary.Extensions;
 
 namespace LineOfBattle
 {

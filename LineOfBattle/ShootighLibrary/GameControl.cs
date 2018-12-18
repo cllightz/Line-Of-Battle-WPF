@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Windows;
-using System.Windows.Input;
 using SharpDX.Direct2D1;
 using SharpDX.Mathematics.Interop;
+using ShootighLibrary.Device;
 
 namespace ShootighLibrary
 {
@@ -38,14 +38,18 @@ namespace ShootighLibrary
         /// <param name="game">抽象クラス Game を実装したクラスのインスタンスを渡す。</param>
         public void SetGameInstance( Game game )
             => GameInstance = game;
-        
+
         /// <summary>
         /// 毎フレーム呼び出されるメソッド。
         /// </summary>
         /// <param name="target"></param>
         public override void Render( RenderTarget target )
         {
-            if ( !IsGameInitialized && GameInstance != null ) {
+            if ( GameInstance == null ) {
+                return;
+            }
+
+            if ( !IsGameInitialized ) {
                 GameInstance.Initialize();
                 IsGameInitialized = true;
             }
@@ -76,7 +80,7 @@ namespace ShootighLibrary
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void KeyDownEventHandler( object sender, KeyEventArgs e )
+        private void KeyDownEventHandler( object sender, System.Windows.Input.KeyEventArgs e )
         {
             switch ( e.Key ) {
                 case System.Windows.Input.Key.W:
@@ -102,7 +106,7 @@ namespace ShootighLibrary
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void KeyUpEventHandler( object sender, KeyEventArgs e )
+        private void KeyUpEventHandler( object sender, System.Windows.Input.KeyEventArgs e )
         {
             switch ( e.Key ) {
                 case System.Windows.Input.Key.W:
@@ -128,14 +132,14 @@ namespace ShootighLibrary
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void MouseDownEventHandler( object sender, MouseButtonEventArgs e )
+        private void MouseDownEventHandler( object sender, System.Windows.Input.MouseButtonEventArgs e )
         {
             switch ( e.ChangedButton ) {
-                case MouseButton.Left:
+                case System.Windows.Input.MouseButton.Left:
                     Mouse.Left = true;
                     break;
 
-                case MouseButton.Right:
+                case System.Windows.Input.MouseButton.Right:
                     Mouse.Right = true;
                     break;
             }
@@ -146,14 +150,14 @@ namespace ShootighLibrary
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void MouseUpEventHandler( object sender, MouseButtonEventArgs e )
+        private void MouseUpEventHandler( object sender, System.Windows.Input.MouseButtonEventArgs e )
         {
             switch ( e.ChangedButton ) {
-                case MouseButton.Left:
+                case System.Windows.Input.MouseButton.Left:
                     Mouse.Left = false;
                     break;
 
-                case MouseButton.Right:
+                case System.Windows.Input.MouseButton.Right:
                     Mouse.Right = false;
                     break;
             }
@@ -164,7 +168,7 @@ namespace ShootighLibrary
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void MouseMoveEventHandler( object sender, MouseEventArgs e )
+        private void MouseMoveEventHandler( object sender, System.Windows.Input.MouseEventArgs e )
         {
             var pos = e.GetPosition( this );
             Mouse.X = (float)pos.X;

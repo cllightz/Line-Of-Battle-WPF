@@ -1,6 +1,6 @@
 ﻿using System.Numerics;
 
-namespace ShootighLibrary
+namespace ShootighLibrary.Device
 {
     /// <summary>
     /// マウスボタンとカーソルの位置を保持する静的クラス。

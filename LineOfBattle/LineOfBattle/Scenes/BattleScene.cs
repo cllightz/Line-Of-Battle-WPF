@@ -5,6 +5,7 @@ using System.Numerics;
 using SharpDX.Direct2D1;
 using SharpDX.Mathematics.Interop;
 using ShootighLibrary;
+using ShootighLibrary.Drawables;
 using ShootighLibrary.Extensions;
 
 namespace LineOfBattle.Scenes
@@ -71,8 +72,9 @@ namespace LineOfBattle.Scenes
             };
         }
 
-        public void Execute( Game game, RenderTarget target )
+        public override void Execute( Game game, RenderTarget target )
         {
+            base.Execute( game, target );
             var lob = (LoB)game;
 
             SpawnEnemy();

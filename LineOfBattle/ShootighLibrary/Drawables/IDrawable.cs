@@ -1,6 +1,6 @@
 ﻿using SharpDX.Direct2D1;
 
-namespace ShootighLibrary
+namespace ShootighLibrary.Drawables
 {
     /// <summary>
     /// 描画可能オブジェクトのインターフェイス。

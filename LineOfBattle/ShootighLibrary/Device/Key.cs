@@ -1,7 +1,8 @@
-﻿using System.Numerics;
+﻿using ShootighLibrary.Extensions;
+using System.Numerics;
 using System.Windows.Input;
 
-namespace ShootighLibrary
+namespace ShootighLibrary.Device
 {
     /// <summary>
     /// キーボードの入力状態を保持する静的クラス。

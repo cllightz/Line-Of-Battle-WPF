@@ -4,7 +4,8 @@ using System.Linq;
 using System.Numerics;
 using LineOfBattle.Scenes;
 using SharpDX.Direct2D1;
-using ShootighLibrary;
+using ShootighLibrary.Device;
+using ShootighLibrary.Extensions;
 
 namespace LineOfBattle
 {

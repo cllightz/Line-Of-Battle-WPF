@@ -186,8 +186,8 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\ShootighLibrary\ShootighLibrary\ShootighLibrary\ShootighLibrary.csproj">
-      <Project>{cea1c4aa-ee29-46bf-8565-ec10f3e15a0a}</Project>
+    <ProjectReference Include="..\ShootighLibrary\ShootighLibrary.csproj">
+      <Project>{67a0f89d-7b28-4ebe-b72e-99f7b7115d06}</Project>
       <Name>ShootighLibrary</Name>
     </ProjectReference>
   </ItemGroup>

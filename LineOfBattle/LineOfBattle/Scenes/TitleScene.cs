@@ -2,6 +2,8 @@
 using SharpDX.Direct2D1;
 using SharpDX.Mathematics.Interop;
 using ShootighLibrary;
+using ShootighLibrary.Device;
+using ShootighLibrary.Drawables;
 
 namespace LineOfBattle.Scenes
 {

@@ -1,7 +1,7 @@
 ﻿using System.Numerics;
 using SharpDX.Mathematics.Interop;
 
-namespace ShootighLibrary
+namespace ShootighLibrary.Drawables
 {
     /// <summary>
     /// IDrawable を実装するクラスに渡す描画設定をまとめたクラス。

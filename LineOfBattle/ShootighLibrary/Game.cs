@@ -1,4 +1,7 @@
 ﻿using SharpDX.Direct2D1;
+using ShootighLibrary.Messenger;
+using System;
+using System.Diagnostics;
 
 namespace ShootighLibrary
 {
@@ -26,6 +29,8 @@ namespace ShootighLibrary
         #endregion
 
         #region Properties
+        public SceneBase CurrentScene { get; protected set; }
+
         /// <summary>
         /// 描画領域の横幅。
         /// </summary>
@@ -37,49 +42,36 @@ namespace ShootighLibrary
         /// </summary>
         public float Height
             => (float)Control.ActualHeight;
-
-        /// <summary>
-        /// 描画領域の端の進入不可領域の幅。
-        /// </summary>
-        public float Padding
-            => 10;
-
-        /// <summary>
-        /// 可動領域の左端X座標。
-        /// </summary>
-        public float Left
-            => Padding;
-
-        /// <summary>
-        /// 可動領域の右端X座標。
-        /// </summary>
-        public float Right
-            => Width - Padding;
-
-        /// <summary>
-        /// 可動領域の上端Y座標。
-        /// </summary>
-        public float Top
-            => Padding;
-
-        /// <summary>
-        /// 可動領域の下端Y座標。
-        /// </summary>
-        public float Bottom
-            => Height - Padding;
         #endregion
 
         #region Abstract Methods
         /// <summary>
         /// 初期化処理の抽象メソッド。
         /// </summary>
-        public abstract void Initialize();
+        public virtual void Initialize()
+            => Mediator.Singleton.RegisterPublisher<Type>( typeof( Game ) );
 
         /// <summary>
         /// 毎フレームの処理の抽象メソッド。
         /// </summary>
         /// <param name="target">GameControl.Render( RenderTarget ) で受け取った RenderTarget のインスタンスを渡す。</param>
-        public abstract void MainLoop( RenderTarget target );
+        public void MainLoop( RenderTarget target )
+            => CurrentScene.Execute( this, target );
+
+        public void TransitScene<TNewScene>() where TNewScene : SceneBase, new()
+        {
+            var oldScene = CurrentScene;
+
+            try {
+                CurrentScene = new TNewScene();
+                oldScene.Dispose();
+                Mediator.Singleton.Publish( typeof( Game ), typeof( TNewScene ) );
+                Debug.WriteLine( $"Scene Transition: from {oldScene.GetType().FullName} to {typeof( TNewScene ).FullName}" );
+            } catch ( Exception e ) {
+                Debug.WriteLine( $"Exception Occurred in {nameof( Game )}.{nameof( TransitScene )}<{typeof( TNewScene ).FullName}>();\ne: {e}" );
+                throw;
+            }
+        }
         #endregion
     }
 }

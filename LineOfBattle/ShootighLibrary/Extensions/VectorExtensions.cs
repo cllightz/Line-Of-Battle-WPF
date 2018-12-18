@@ -1,7 +1,7 @@
 ﻿using System.Numerics;
 using SharpDX.Mathematics.Interop;
 
-namespace ShootighLibrary
+namespace ShootighLibrary.Extensions
 {
     /// <summary>
     /// 各種のベクトルを表すクラス間の変換を行う拡張メソッド類。
