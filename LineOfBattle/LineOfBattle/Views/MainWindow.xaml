@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:vm="clr-namespace:LineOfBattle.ViewModels"
         xmlns:sl="clr-namespace:ShootighLibrary;assembly=ShootighLibrary"
         mc:Ignorable="d"
         Title="Line of Battle"
@@ -14,38 +13,17 @@
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Views/TemplateResourceDictionary.xaml" />
+                <ResourceDictionary Source="/Views/SceneUITemplateResourceDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
 
     <Grid>
-        <ContentControl x:Name="UI"
-                        Content="{Binding SceneUIViewModel.Value}"
-                        Panel.ZIndex="1"
-                        >
+        <ContentControl x:Name="UI" Content="{Binding SceneUIViewModel.Value}" Panel.ZIndex="1">
             <ContentControl.Resources>
-                <DataTemplate DataType="{x:Type vm:TitleSceneUIViewModel}">
-                    <StackPanel VerticalAlignment="Center">
-                        <TextBlock Text="{Binding Title}" HorizontalAlignment="Stretch" TextAlignment="Center" TextWrapping="Wrap" FontSize="64" Foreground="Yellow" />
-                        <TextBlock Text="{Binding Prompt}" HorizontalAlignment="Stretch" TextAlignment="Center" TextWrapping="Wrap" FontSize="48" Foreground="Yellow" />
-                        <Control Height="100" />
-                    </StackPanel>
-                </DataTemplate>
-
-                <DataTemplate DataType="{x:Type vm:BattleSceneUIViewModel}">
-                    <DockPanel>
-                        <StackPanel DockPanel.Dock="Right">
-                            <TextBlock Text="固定テキスト" Foreground="Red" />
-                            <TextBlock Text="{Binding Score}" Foreground="Red" />
-                        </StackPanel>
-                    </DockPanel>
-                </DataTemplate>
             </ContentControl.Resources>
         </ContentControl>
         
-        <sl:GameControl x:Name="Graphics"
-                        Panel.ZIndex="-1"
-                        />
+        <sl:GameControl x:Name="Graphics" Panel.ZIndex="-1" />
     </Grid>
 </Window>

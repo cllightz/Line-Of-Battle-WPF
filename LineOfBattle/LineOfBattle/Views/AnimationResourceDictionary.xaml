@@ -1,0 +1,22 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    >
+    
+    <!-- 点滅ここから -->
+    <Storyboard x:Key="BlinkingStoryboard">
+        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" RepeatBehavior="Forever">
+            <DiscreteDoubleKeyFrame KeyTime="0"       Value="0" />
+            <DiscreteDoubleKeyFrame KeyTime="0:0:0.5" Value="1" />
+            <DiscreteDoubleKeyFrame KeyTime="0:0:1"   Value="0" />
+        </DoubleAnimationUsingKeyFrames>
+    </Storyboard>
+    <Style TargetType="TextBlock" x:Key="BlinkingStyle">
+        <Style.Triggers>
+            <EventTrigger RoutedEvent="TextBlock.Loaded">
+                <BeginStoryboard Storyboard="{StaticResource BlinkingStoryboard}" x:Name="BlinkingStoryboard1" />
+            </EventTrigger>
+        </Style.Triggers>
+    </Style>
+    <!-- 点滅ここまで -->
+    
+</ResourceDictionary>

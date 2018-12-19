@@ -1,0 +1,58 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:vm="clr-namespace:LineOfBattle.ViewModels"
+                    >
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/Views/AnimationResourceDictionary.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+    
+    <DataTemplate DataType="{x:Type vm:TitleSceneUIViewModel}">
+        <StackPanel VerticalAlignment="Center">
+            <TextBlock Text="{Binding Title, Mode=OneWay}"
+                       HorizontalAlignment="Stretch" TextAlignment="Center" TextWrapping="Wrap"
+                       FontSize="64" FontFamily="Consolas" Foreground="Yellow"
+                       />
+            <Control Height="50" />
+            <TextBlock Text="{Binding Prompt, Mode=OneWay}"
+                       Style="{StaticResource BlinkingStyle}"
+                       HorizontalAlignment="Stretch" TextAlignment="Center" TextWrapping="Wrap"
+                       FontSize="36" FontFamily="Consolas" Foreground="White"
+                       />
+            <Control Height="100" />
+        </StackPanel>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:BattleSceneUIViewModel}">
+        <DockPanel>
+            <StackPanel DockPanel.Dock="Bottom">
+                <TextBlock Text="{Binding Fps, ElementName=Graphics}"
+                           TextAlignment="Right" Padding="5"
+                           FontSize="10.5" FontFamily="Consolas" Foreground="#7FFFFFFF"
+                           />
+            </StackPanel>
+            <StackPanel DockPanel.Dock="Left" Margin="15,15,15,15">
+                <TextBlock Text="Line of Battle" FontSize="16" FontFamily="Consolas" Foreground="White" />
+            </StackPanel>
+            <StackPanel DockPanel.Dock="Right" Margin="15,15,15,15">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="20" />
+                        <RowDefinition Height="20" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="120" />
+                    </Grid.ColumnDefinitions>
+                    
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="HighScore"            TextAlignment="Right" FontSize="16" FontFamily="Consolas" Foreground="White" />
+                    <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding HighScore, StringFormat={}{0:D9}}" FontSize="16" FontFamily="Consolas" Foreground="White" />
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Score"                TextAlignment="Right" FontSize="16" FontFamily="Consolas" Foreground="White" />
+                    <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding HighScore, StringFormat={}{0:D9}}" FontSize="16" FontFamily="Consolas" Foreground="White" />
+                </Grid>
+            </StackPanel>
+            <Control />
+        </DockPanel>
+    </DataTemplate>
+    
+</ResourceDictionary>
