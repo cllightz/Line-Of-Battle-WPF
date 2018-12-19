@@ -17,7 +17,10 @@ namespace ShootighLibrary
         /// 抽象クラス Game を実装するクラスのインスタンスの親インスタンスにあたる。
         /// </summary>
         public GameControl Control;
+
         protected RenderTarget Target;
+
+        private bool _isSceneInitialized;
         #endregion
 
         #region Constuctor
@@ -53,14 +56,25 @@ namespace ShootighLibrary
         /// 初期化処理の抽象メソッド。
         /// </summary>
         public virtual void Initialize()
-            => Mediator.Singleton.RegisterPublisher<Type>( typeof( Game ) );
+        {
+            Mediator.Singleton.RegisterPublisher<Type>( typeof( Game ) );
+            CurrentScene?.Initialize( this );
+            _isSceneInitialized = false;
+        }
 
         /// <summary>
         /// 毎フレームの処理の抽象メソッド。
         /// </summary>
         /// <param name="target">GameControl.Render( RenderTarget ) で受け取った RenderTarget のインスタンスを渡す。</param>
         public void MainLoop( RenderTarget target )
-            => CurrentScene.Execute( this, target );
+        {
+            if ( !_isSceneInitialized ) {
+                CurrentScene.Initialize( this );
+                _isSceneInitialized = true;
+            }
+
+            CurrentScene.Execute( this, target );
+        }
 
         public void TransitScene<TNewScene>() where TNewScene : SceneBase, new()
         {
@@ -70,7 +84,8 @@ namespace ShootighLibrary
                 CurrentScene = new TNewScene();
                 oldScene?.Dispose();
                 Mediator.Singleton.Publish( typeof( Game ), typeof( TNewScene ).Name );
-                CurrentScene?.Initialize( this );
+                _isSceneInitialized = false;
+                // CurrentScene?.Initialize( this );
                 Debug.WriteLine( $"Scene Transition: from {oldScene?.GetType().FullName ?? "null"} to {typeof( TNewScene ).FullName}" );
             } catch ( Exception e ) {
                 Debug.WriteLine( $"Exception Occurred in {nameof( Game )}.{nameof( TransitScene )}<{typeof( TNewScene ).FullName}>();\ne: {e}" );

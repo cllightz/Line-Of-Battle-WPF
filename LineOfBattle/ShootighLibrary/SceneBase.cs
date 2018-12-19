@@ -12,7 +12,12 @@ namespace ShootighLibrary
         public SceneBase() { }
 
         public void Initialize( Game game )
-            => GameInstance = game;
+        {
+            GameInstance = game;
+            Initialize();
+        }
+
+        protected abstract void Initialize();
 
         // リソースの参照も渡す
         public void Execute( Game game, RenderTarget target )

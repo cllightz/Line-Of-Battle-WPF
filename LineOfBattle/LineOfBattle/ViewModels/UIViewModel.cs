@@ -20,10 +20,17 @@ namespace LineOfBattle.ViewModels
                   .Subscribe( m => {
                       if ( m == null ) { return; }
 
-                      if ( m is TitleSceneUIModel uim ) {
-                          SceneUIViewModel.Value = new TitleSceneUIViewModel( uim );
-                      } else {
-                          throw new InvalidOperationException( $"No related Scene UI View Model found at the constructor of UIViewModel." );
+                      switch ( m ) {
+                          case TitleSceneUIModel uim:
+                              SceneUIViewModel.Value = new TitleSceneUIViewModel( uim );
+                              break;
+
+                          case BattleSceneUIModel uim:
+                              SceneUIViewModel.Value = new BattleSceneUIViewModel( uim );
+                              break;
+
+                          default:
+                              throw new InvalidOperationException( $"No related Scene UI View Model found at the constructor of UIViewModel." );
                       }
                   } )
                   .AddTo( Disposables );

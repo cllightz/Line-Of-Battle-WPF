@@ -6,9 +6,7 @@ namespace LineOfBattle.Scenes
 {
     internal class TitleScene : SceneBase
     {
-        public TitleScene() : base()
-        {
-        }
+        protected override void Initialize() { }
 
         protected override void Execute( RenderTarget target )
         {

@@ -99,6 +99,7 @@
     <Compile Include="Messenger\ImmediateFiringChannel.cs" />
     <Compile Include="Messenger\IChannel.cs" />
     <Compile Include="MVVM\ModelBase.cs" />
+    <Compile Include="MVVM\SceneUIViewModelBase.cs" />
     <Compile Include="MVVM\ViewModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SceneBase.cs" />

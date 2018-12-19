@@ -36,7 +36,8 @@
                 <DataTemplate DataType="{x:Type vm:BattleSceneUIViewModel}">
                     <DockPanel>
                         <StackPanel DockPanel.Dock="Right">
-                            <TextBlock Text="{Binding Score}" Foreground="White" />
+                            <TextBlock Text="固定テキスト" Foreground="Red" />
+                            <TextBlock Text="{Binding Score}" Foreground="Red" />
                         </StackPanel>
                     </DockPanel>
                 </DataTemplate>

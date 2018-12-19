@@ -17,6 +17,9 @@ namespace LineOfBattle
         /// RenderTargetの情報を必要とするものを記述する．
         /// </summary>
         public override void Initialize()
-            => TransitScene<TitleScene>();
+        {
+            base.Initialize();
+            TransitScene<TitleScene>();
+        }
     }
 }

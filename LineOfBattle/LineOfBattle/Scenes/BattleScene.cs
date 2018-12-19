@@ -59,7 +59,7 @@ namespace LineOfBattle.Scenes
         internal float Bottom => Height - Padding;
         #endregion
 
-        public BattleScene() : base()
+        protected override void Initialize()
         {
             var drawoptions = new DrawOptions( new Vector2( Width / 2, Height / 2 ), 6, new RawColor4( 0, 1, 0, 1 ) );
 
