@@ -22,5 +22,17 @@ namespace LineOfBattle.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int HighScore {
+            get {
+                return ((int)(this["HighScore"]));
+            }
+            set {
+                this["HighScore"] = value;
+            }
+        }
     }
 }

@@ -41,14 +41,14 @@
                         <RowDefinition Height="20" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="120" />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     
-                    <TextBlock Grid.Row="0" Grid.Column="0" Text="HighScore"            TextAlignment="Right" FontSize="16" FontFamily="Consolas" Foreground="White" />
-                    <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding HighScore, StringFormat={}{0:D9}}" FontSize="16" FontFamily="Consolas" Foreground="White" />
-                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Score"                TextAlignment="Right" FontSize="16" FontFamily="Consolas" Foreground="White" />
-                    <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding HighScore, StringFormat={}{0:D9}}" FontSize="16" FontFamily="Consolas" Foreground="White" />
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="HighScore"                                        TextAlignment="Right" FontSize="16" FontFamily="Consolas" Foreground="White" />
+                    <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding HighScore.Value, StringFormat={}{0:D9}}" Margin="10,0,0,0"     FontSize="16" FontFamily="Consolas" Foreground="White" />
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Score"                                            TextAlignment="Right" FontSize="16" FontFamily="Consolas" Foreground="White" />
+                    <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Score.Value,     StringFormat={}{0:D9}}" Margin="10,0,0,0"     FontSize="16" FontFamily="Consolas" Foreground="White" />
                 </Grid>
             </StackPanel>
             <Control />

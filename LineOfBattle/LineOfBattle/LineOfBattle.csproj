@@ -138,6 +138,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="MessageArgsTypes\GainScoreMessageArgs.cs" />
     <Compile Include="Models\ResultSceneUIModel.cs" />
     <Compile Include="Models\BattleSceneUIModel.cs" />
     <Compile Include="Models\TitleSceneUIModel.cs" />
