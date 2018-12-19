@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using LineOfBattle.MessageArgsTypes;
 using SharpDX.Direct2D1;
 using SharpDX.Mathematics.Interop;
 using ShootighLibrary;
 using ShootighLibrary.Drawables;
 using ShootighLibrary.Extensions;
+using ShootighLibrary.Messenger;
 
 namespace LineOfBattle.Scenes
 {
@@ -70,6 +72,8 @@ namespace LineOfBattle.Scenes
                 new Unit( this, drawoptions.Clone, 10 ),
                 new Unit( this, drawoptions.Clone, 10 ),
             };
+
+            Mediator.Singleton.RegisterPublisher<GainScoreMessageArgs>( typeof( BattleScene ) );
         }
 
         protected override void Execute( RenderTarget target )
@@ -191,6 +195,7 @@ namespace LineOfBattle.Scenes
                 u.Neutralize();
                 Neutrals.Add( u );
                 Enemies.Remove( u );
+                Mediator.Singleton.Publish<GainScoreMessageArgs>( typeof( BattleScene ), new GainScoreMessageArgs( 123 ) );
             }
         }
 

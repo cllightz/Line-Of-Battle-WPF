@@ -9,7 +9,7 @@ namespace LineOfBattle.Models
         internal int HighScore { get => _highScore; private set => SetProperty( ref _highScore, value ); }
 
         private int _score;
-        internal int Score { get => _score; private set => SetProperty( ref _highScore, value ); }
+        internal int Score { get => _score; private set => SetProperty( ref _score, value ); }
 
         internal BattleSceneUIModel()
         {

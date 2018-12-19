@@ -4,7 +4,7 @@
     {
         internal readonly int Value;
 
-        GainScoreMessageArgs( int value )
+        internal GainScoreMessageArgs( int value )
             => Value = value;
     }
 }
