@@ -23,9 +23,9 @@
         </ResourceDictionary>
     </Window.Resources>
 
-    <!--<Grid>-->
+    <Grid>
         <sl:GameControl x:Name="Graphics" />
-        <!--<ContentControl x:Name="UI" Content="{Binding SceneUIViewModel.Value}">
+        <ContentControl x:Name="UI" Content="{Binding SceneUIViewModel.Value}">
             <ContentControl.Resources>
                 <DataTemplate DataType="{x:Type vm:TitleSceneUIViewModel}">
                     <DockPanel>
@@ -46,6 +46,6 @@
                     </DockPanel>
                 </DataTemplate>
             </ContentControl.Resources>
-        </ContentControl>-->
-    <!--</Grid>-->
+        </ContentControl>
+    </Grid>
 </Window>
