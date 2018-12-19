@@ -11,10 +11,6 @@
         d:DesignHeight="480"
         >
     
-    <!--<Window.DataContext>
-        <vm:UIViewModel />
-    </Window.DataContext>-->
-
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -30,14 +26,11 @@
                         >
             <ContentControl.Resources>
                 <DataTemplate DataType="{x:Type vm:TitleSceneUIViewModel}">
-                    <DockPanel>
-                        <StackPanel DockPanel.Dock="Right">
-                            <StackPanel VerticalAlignment="Center">
-                                <TextBlock Text="{Binding Title}" Foreground="Yellow" />
-                                <TextBlock Text="{Binding Prompt}" Foreground="Yellow" />
-                            </StackPanel>
-                        </StackPanel>
-                    </DockPanel>
+                    <StackPanel VerticalAlignment="Center">
+                        <TextBlock Text="{Binding Title}" HorizontalAlignment="Stretch" TextAlignment="Center" TextWrapping="Wrap" FontSize="64" Foreground="Yellow" />
+                        <TextBlock Text="{Binding Prompt}" HorizontalAlignment="Stretch" TextAlignment="Center" TextWrapping="Wrap" FontSize="48" Foreground="Yellow" />
+                        <Control Height="100" />
+                    </StackPanel>
                 </DataTemplate>
 
                 <DataTemplate DataType="{x:Type vm:BattleSceneUIViewModel}">
