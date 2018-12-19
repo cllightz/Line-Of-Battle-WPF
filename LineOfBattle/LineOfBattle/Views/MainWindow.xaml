@@ -24,8 +24,10 @@
     </Window.Resources>
 
     <Grid>
-        <sl:GameControl x:Name="Graphics" />
-        <ContentControl x:Name="UI" Content="{Binding SceneUIViewModel.Value}">
+        <ContentControl x:Name="UI"
+                        Content="{Binding SceneUIViewModel.Value}"
+                        Panel.ZIndex="1"
+                        >
             <ContentControl.Resources>
                 <DataTemplate DataType="{x:Type vm:TitleSceneUIViewModel}">
                     <DockPanel>
@@ -47,5 +49,9 @@
                 </DataTemplate>
             </ContentControl.Resources>
         </ContentControl>
+        
+        <sl:GameControl x:Name="Graphics"
+                        Panel.ZIndex="-1"
+                        />
     </Grid>
 </Window>
