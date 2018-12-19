@@ -25,16 +25,16 @@
 
     <DataTemplate DataType="{x:Type vm:BattleSceneUIViewModel}">
         <DockPanel>
-            <StackPanel DockPanel.Dock="Bottom">
+            <StackPanel DockPanel.Dock="Bottom" Margin="5">
                 <TextBlock Text="{Binding Fps, ElementName=Graphics}"
-                           TextAlignment="Right" Padding="5"
+                           TextAlignment="Right"
                            FontSize="10.5" FontFamily="Consolas" Foreground="#7FFFFFFF"
                            />
             </StackPanel>
-            <StackPanel DockPanel.Dock="Left" Margin="15,15,15,15">
-                <TextBlock Text="Line of Battle" FontSize="16" FontFamily="Consolas" Foreground="White" />
+            <StackPanel DockPanel.Dock="Left" Margin="5">
+                <TextBlock Text="Line of Battle" FontSize="32" FontFamily="Consolas" Foreground="#3FFFFFFF" />
             </StackPanel>
-            <StackPanel DockPanel.Dock="Right" Margin="15,15,15,15">
+            <StackPanel DockPanel.Dock="Right" Margin="15">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="20" />

@@ -83,21 +83,11 @@ namespace ShootighLibrary
         private void KeyDownEventHandler( object sender, System.Windows.Input.KeyEventArgs e )
         {
             switch ( e.Key ) {
-                case System.Windows.Input.Key.W:
-                    Key.W = true;
-                    break;
-
-                case System.Windows.Input.Key.A:
-                    Key.A = true;
-                    break;
-
-                case System.Windows.Input.Key.S:
-                    Key.S = true;
-                    break;
-
-                case System.Windows.Input.Key.D:
-                    Key.D = true;
-                    break;
+                case System.Windows.Input.Key.W: Key.W = true; break;
+                case System.Windows.Input.Key.A: Key.A = true; break;
+                case System.Windows.Input.Key.S: Key.S = true; break;
+                case System.Windows.Input.Key.D: Key.D = true; break;
+                case System.Windows.Input.Key.Space: Key.Space = true; break;
             }
         }
 
@@ -109,21 +99,11 @@ namespace ShootighLibrary
         private void KeyUpEventHandler( object sender, System.Windows.Input.KeyEventArgs e )
         {
             switch ( e.Key ) {
-                case System.Windows.Input.Key.W:
-                    Key.W = false;
-                    break;
-
-                case System.Windows.Input.Key.A:
-                    Key.A = false;
-                    break;
-
-                case System.Windows.Input.Key.S:
-                    Key.S = false;
-                    break;
-
-                case System.Windows.Input.Key.D:
-                    Key.D = false;
-                    break;
+                case System.Windows.Input.Key.W: Key.W = false; break;
+                case System.Windows.Input.Key.A: Key.A = false; break;
+                case System.Windows.Input.Key.S: Key.S = false; break;
+                case System.Windows.Input.Key.D: Key.D = false; break;
+                case System.Windows.Input.Key.Space: Key.Space = false; break;
             }
         }
 

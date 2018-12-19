@@ -14,22 +14,27 @@ namespace ShootighLibrary.Device
         /// <summary>
         /// Wキー
         /// </summary>
-        public static bool W;
+        public static bool W { get; internal set; }
 
         /// <summary>
         /// Aキー
         /// </summary>
-        public static bool A;
+        public static bool A { get; internal set; }
 
         /// <summary>
         /// Sキー
         /// </summary>
-        public static bool S;
+        public static bool S { get; internal set; }
 
         /// <summary>
         /// Dキー
         /// </summary>
-        public static bool D;
+        public static bool D { get; internal set; }
+
+        /// <summary>
+        /// スペースキー
+        /// </summary>
+        public static bool Space { get; internal set; }
         #endregion
 
         #region Properties
