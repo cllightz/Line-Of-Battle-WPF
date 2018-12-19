@@ -1,4 +1,6 @@
-﻿using System.Numerics;
+﻿using Reactive.Bindings;
+using System.Numerics;
+using System.Reactive.Linq;
 
 namespace ShootighLibrary.Device
 {
@@ -7,40 +9,22 @@ namespace ShootighLibrary.Device
     /// </summary>
     public static class Mouse
     {
-        #region Fields
-        /// <summary>
-        /// 左ボタン。
-        /// </summary>
-        public static bool Left;
+        /// <summary>左ボタンが押されているか</summary>
+        public static ReactiveProperty<bool> Left { get; } = new ReactiveProperty<bool>( false );
 
-        /// <summary>
-        /// 右ボタン。
-        /// </summary>
-        public static bool Right;
+        /// <summary>右ボタンが押されているか</summary>
+        public static ReactiveProperty<bool> Right { get; } = new ReactiveProperty<bool>( false );
 
-        /// <summary>
-        /// GameControl 上のカーソルのX座標。
-        /// </summary>
-        public static float X;
+        /// <summary>GameControl 上のカーソルのX座標</summary>
+        public static ReactiveProperty<float> X { get; } = new ReactiveProperty<float>( 0 );
 
-        /// <summary>
-        /// GameControl 上のカーソルのY座標。
-        /// </summary>
-        public static float Y;
-        #endregion
+        /// <summary>GameControl 上のカーソルのY座標。</summary>
+        public static ReactiveProperty<float> Y { get; } = new ReactiveProperty<float>( 0 );
 
-        #region Properties
-        /// <summary>
-        /// 左ボタンまたは右ボタンが押されているならば真を返す。
-        /// </summary>
-        public static bool Any
-            => Left || Right;
+        /// <summary>左ボタンまたは右ボタンが押されているか</summary>
+        public static ReadOnlyReactiveProperty<bool> Any { get; } = Left.CombineLatest( Right, ( l, r ) => l || r ).ToReadOnlyReactiveProperty();
 
-        /// <summary>
-        /// GameControl 上のカーソルの2次元座標を2次元ベクトルで返す。
-        /// </summary>
-        public static Vector2 Position
-            => new Vector2( X, Y );
-        #endregion
+        /// <summary>GameControl 上のカーソルの座標の2次元ベクトル</summary>
+        public static ReadOnlyReactiveProperty<Vector2> Position { get; } = X.CombineLatest( Y, ( x, y ) => new Vector2( x, y ) ).ToReadOnlyReactiveProperty();
     }
 }

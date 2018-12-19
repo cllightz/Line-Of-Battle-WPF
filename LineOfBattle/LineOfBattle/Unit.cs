@@ -97,12 +97,12 @@ namespace LineOfBattle
         {
             switch ( Faction ) {
                 case Faction.Ally:
-                    if ( Mouse.Any && CoolDownTimer <= 0 ) {
-                        var cursor = Mouse.Position;
+                    if ( Mouse.Any.Value && CoolDownTimer <= 0 ) {
+                        var cursor = Mouse.Position.Value;
                         var posL = DrawOptions.Position;
                         var posR = _scene.Allies.Units.First().DrawOptions.Position;
                         var posLR = (posL + posR) / 2;
-                        var pos = Mouse.Left ? (Mouse.Right ? posLR : posL) : (Mouse.Right ? posR : throw new InvalidOperationException());
+                        var pos = Mouse.Left.Value ? (Mouse.Right.Value ? posLR : posL) : (Mouse.Right.Value ? posR : throw new InvalidOperationException());
                         var direction = (cursor - pos).Versor();
                         var velocity = 5 * direction; // TODO: 速度の係数をフィールドまたはプロパティにする。
                         var drawoptions = new DrawOptions( DrawOptions.Position, 5, new RawColor4( 0, 1, 1, 1 ) );

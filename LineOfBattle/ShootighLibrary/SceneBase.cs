@@ -1,11 +1,13 @@
 ﻿using SharpDX.Direct2D1;
 using System;
+using System.Reactive.Disposables;
 
 namespace ShootighLibrary
 {
     public abstract class SceneBase : IDisposable
     {
         protected Game GameInstance;
+        protected CompositeDisposable Disposables = new CompositeDisposable();
         public int FrameCount = 0;
         public Random Rand = new Random();
 
@@ -29,6 +31,7 @@ namespace ShootighLibrary
 
         protected abstract void Execute( RenderTarget target );
 
-        public void Dispose() { }
+        public void Dispose()
+            => Disposables.Dispose();
     }
 }

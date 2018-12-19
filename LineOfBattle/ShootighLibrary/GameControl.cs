@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using SWI = System.Windows.Input;
 using SharpDX.Direct2D1;
 using SharpDX.Mathematics.Interop;
 using ShootighLibrary.Device;
@@ -80,14 +81,14 @@ namespace ShootighLibrary
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void KeyDownEventHandler( object sender, System.Windows.Input.KeyEventArgs e )
+        private void KeyDownEventHandler( object sender, SWI.KeyEventArgs e )
         {
             switch ( e.Key ) {
-                case System.Windows.Input.Key.W: Key.W = true; break;
-                case System.Windows.Input.Key.A: Key.A = true; break;
-                case System.Windows.Input.Key.S: Key.S = true; break;
-                case System.Windows.Input.Key.D: Key.D = true; break;
-                case System.Windows.Input.Key.Space: Key.Space = true; break;
+                case SWI.Key.W: Key.W.Value = true; break;
+                case SWI.Key.A: Key.A.Value = true; break;
+                case SWI.Key.S: Key.S.Value = true; break;
+                case SWI.Key.D: Key.D.Value = true; break;
+                case SWI.Key.Space: Key.Space.Value = true; break;
             }
         }
 
@@ -96,14 +97,14 @@ namespace ShootighLibrary
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void KeyUpEventHandler( object sender, System.Windows.Input.KeyEventArgs e )
+        private void KeyUpEventHandler( object sender, SWI.KeyEventArgs e )
         {
             switch ( e.Key ) {
-                case System.Windows.Input.Key.W: Key.W = false; break;
-                case System.Windows.Input.Key.A: Key.A = false; break;
-                case System.Windows.Input.Key.S: Key.S = false; break;
-                case System.Windows.Input.Key.D: Key.D = false; break;
-                case System.Windows.Input.Key.Space: Key.Space = false; break;
+                case SWI.Key.W: Key.W.Value = false; break;
+                case SWI.Key.A: Key.A.Value = false; break;
+                case SWI.Key.S: Key.S.Value = false; break;
+                case SWI.Key.D: Key.D.Value = false; break;
+                case SWI.Key.Space: Key.Space.Value = false; break;
             }
         }
 
@@ -112,16 +113,11 @@ namespace ShootighLibrary
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void MouseDownEventHandler( object sender, System.Windows.Input.MouseButtonEventArgs e )
+        private void MouseDownEventHandler( object sender, SWI.MouseButtonEventArgs e )
         {
             switch ( e.ChangedButton ) {
-                case System.Windows.Input.MouseButton.Left:
-                    Mouse.Left = true;
-                    break;
-
-                case System.Windows.Input.MouseButton.Right:
-                    Mouse.Right = true;
-                    break;
+                case SWI.MouseButton.Left: Mouse.Left.Value = true; break;
+                case SWI.MouseButton.Right: Mouse.Right.Value = true; break;
             }
         }
 
@@ -130,16 +126,11 @@ namespace ShootighLibrary
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void MouseUpEventHandler( object sender, System.Windows.Input.MouseButtonEventArgs e )
+        private void MouseUpEventHandler( object sender, SWI.MouseButtonEventArgs e )
         {
             switch ( e.ChangedButton ) {
-                case System.Windows.Input.MouseButton.Left:
-                    Mouse.Left = false;
-                    break;
-
-                case System.Windows.Input.MouseButton.Right:
-                    Mouse.Right = false;
-                    break;
+                case SWI.MouseButton.Left: Mouse.Left.Value = false; break;
+                case SWI.MouseButton.Right: Mouse.Right.Value = false; break;
             }
         }
 
@@ -148,11 +139,11 @@ namespace ShootighLibrary
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void MouseMoveEventHandler( object sender, System.Windows.Input.MouseEventArgs e )
+        private void MouseMoveEventHandler( object sender, SWI.MouseEventArgs e )
         {
             var pos = e.GetPosition( this );
-            Mouse.X = (float)pos.X;
-            Mouse.Y = (float)pos.Y;
+            Mouse.X.Value = (float)pos.X;
+            Mouse.Y.Value = (float)pos.Y;
         }
         #endregion
     }

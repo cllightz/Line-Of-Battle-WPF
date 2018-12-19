@@ -1,5 +1,7 @@
-﻿using ShootighLibrary.Extensions;
+﻿using Reactive.Bindings;
+using ShootighLibrary.Extensions;
 using System.Numerics;
+using System.Reactive.Linq;
 using System.Windows.Input;
 
 namespace ShootighLibrary.Device
@@ -10,52 +12,28 @@ namespace ShootighLibrary.Device
     /// </summary>
     public static class Key
     {
-        #region Fields
-        /// <summary>
-        /// Wキー
-        /// </summary>
-        public static bool W { get; internal set; }
+        /// <summary>スペースキー</summary>
+        public static ReactiveProperty<bool> Space { get; } = new ReactiveProperty<bool>( false );
 
-        /// <summary>
-        /// Aキー
-        /// </summary>
-        public static bool A { get; internal set; }
+        /// <summary>Wキー</summary>
+        public static ReactiveProperty<bool> W { get; } = new ReactiveProperty<bool>( false );
 
-        /// <summary>
-        /// Sキー
-        /// </summary>
-        public static bool S { get; internal set; }
+        /// <summary>Aキー</summary>
+        public static ReactiveProperty<bool> A { get; } = new ReactiveProperty<bool>( false );
 
-        /// <summary>
-        /// Dキー
-        /// </summary>
-        public static bool D { get; internal set; }
+        /// <summary>Sキー</summary>
+        public static ReactiveProperty<bool> S { get; } = new ReactiveProperty<bool>( false );
 
-        /// <summary>
-        /// スペースキー
-        /// </summary>
-        public static bool Space { get; internal set; }
-        #endregion
+        /// <summary>Dキー</summary>
+        public static ReactiveProperty<bool> D { get; } = new ReactiveProperty<bool>( false );
+        
+        /// <summary>W, A, S, D のいずれかが押されているならば真を返す。</summary>
+        public static ReadOnlyReactiveProperty<bool> AnyDirection { get; } = W.CombineLatest( A, S, D, ( w, a, s, d ) => w || a || s || d ).ToReadOnlyReactiveProperty();
 
-        #region Properties
-        /// <summary>
-        /// W, A, S, D のいずれかが押されているならば真を返す。
-        /// </summary>
-        public static bool AnyDirection
-            => W || A || S || D;
+        /// <summary>Shiftキー</summary>
+        public static bool Shift => (Keyboard.GetKeyStates( System.Windows.Input.Key.LeftShift ) | (Keyboard.GetKeyStates( System.Windows.Input.Key.RightShift )) & KeyStates.Down) == KeyStates.Down;
 
-        /// <summary>
-        /// Shiftキー
-        /// </summary>
-        public static bool Shift
-            => (Keyboard.GetKeyStates( System.Windows.Input.Key.LeftShift ) & KeyStates.Down) == KeyStates.Down
-            || (Keyboard.GetKeyStates( System.Windows.Input.Key.RightShift ) & KeyStates.Down) == KeyStates.Down;
-
-        /// <summary>
-        /// WASDキーによる入力方向の2次元ベクトルを正規化したものを返す。
-        /// </summary>
-        public static Vector2 Direction
-            => new Vector2( A ? -1 : D ? 1 : 0, W ? -1 : S ? 1 : 0 ).Versor();
-        #endregion
+        /// <summary>WASD入力による方向入力の正規化された2次元ベクトル</summary>
+        public static ReadOnlyReactiveProperty<Vector2> Direction { get; } = W.CombineLatest( A, S, D, ( w, a, s, d ) => new Vector2( a ? -1 : d ? 1 : 0, w ? -1 : s ? 1 : 0 ).Versor() ).ToReadOnlyReactiveProperty();
     }
 }

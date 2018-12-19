@@ -1,6 +1,7 @@
 ﻿using ShootighLibrary.Messenger;
 using ShootighLibrary.MVVM;
 using System;
+using System.IO;
 
 namespace LineOfBattle.Models
 {
@@ -38,6 +39,15 @@ namespace LineOfBattle.Models
                 default:
                     throw new InvalidOperationException( $"Unknown scene name \"{sceneName}\" used at {nameof( UIModel )}.{nameof( TransitUIModel )}()." );
             }
+        }
+
+        internal void DebugSaveMessengerInfo()
+        {
+            Mediator.Singleton.DebugOutput( s => {
+                var path = Path.GetTempPath();
+                // WriteLine
+                // 時間がかかりそうであれば Debug.WriteLine() でもOK
+            } );
         }
     }
 }

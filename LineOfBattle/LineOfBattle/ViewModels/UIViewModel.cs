@@ -1,6 +1,7 @@
 ﻿using LineOfBattle.Models;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
+using ShootighLibrary.Device;
 using ShootighLibrary.MVVM;
 using System;
 
@@ -34,6 +35,12 @@ namespace LineOfBattle.ViewModels
                       }
                   } )
                   .AddTo( Disposables );
+
+            Key.Space.Subscribe( isPressed => {
+                if ( isPressed ) {
+                    _model.DebugSaveMessengerInfo();
+                }
+            } );
         }
     }
 }

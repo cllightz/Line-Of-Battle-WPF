@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace ShootighLibrary.Messenger
 {
@@ -11,7 +12,7 @@ namespace ShootighLibrary.Messenger
 
         private Mediator() { }
 
-        private Dictionary<Type, object> _channels = new Dictionary<Type, object>();
+        private Dictionary<Type, IChannel> _channels = new Dictionary<Type, IChannel>();
 
         public Mediator RegisterPublisher<TArgs>( Type publisherType )
         {
@@ -58,5 +59,25 @@ namespace ShootighLibrary.Messenger
 
             return this;
         }
+
+#if DEBUG
+        public Mediator DebugOutput( Action<string> output )
+        {
+            output( string.Join( "\n",
+                _channels.SelectMany( ch =>
+                    (ch.Value as IChannel).EnumeratePublishers().Select( type => {
+                        return "TArgs,PublisherType";
+                        // IChannel<TArgs> の TArgs が何かを取得して、以下のような行を生成したい
+                        // リフレクションは理想、
+                        // デバッグ出力はできなくても、列挙まで出来てるところをアピールできればよい
+                        // {TArgs},{PublisherType}
+                    } )
+                    // .Concat( (ch.Value as IChannel).EnumerateSubscribers() )
+                )
+            ) );
+
+            return this;
+        }
+#endif
     }
 }
