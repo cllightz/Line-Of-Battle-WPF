@@ -13,10 +13,27 @@
     <Style TargetType="TextBlock" x:Key="BlinkingStyle">
         <Style.Triggers>
             <EventTrigger RoutedEvent="TextBlock.Loaded">
-                <BeginStoryboard Storyboard="{StaticResource BlinkingStoryboard}" x:Name="BlinkingStoryboard1" />
+                <BeginStoryboard Storyboard="{StaticResource BlinkingStoryboard}" />
             </EventTrigger>
         </Style.Triggers>
     </Style>
     <!-- 点滅ここまで -->
     
+    <!-- フェードインここから -->
+    <Storyboard x:Key="FadeInStoryboard">
+        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)">
+            <LinearDoubleKeyFrame KeyTime="0"     Value="0" />
+            <LinearDoubleKeyFrame KeyTime="0:0:2" Value="0" />
+            <LinearDoubleKeyFrame KeyTime="0:0:4" Value="1" />
+        </DoubleAnimationUsingKeyFrames>
+    </Storyboard>
+    <Style TargetType="TextBlock" x:Key="FadeInStyle">
+        <Style.Triggers>
+            <EventTrigger RoutedEvent="TextBlock.Loaded">
+                <BeginStoryboard Storyboard="{StaticResource FadeInStoryboard}" />
+            </EventTrigger>
+        </Style.Triggers>
+    </Style>
+    <!-- フェードインここまで -->
+
 </ResourceDictionary>

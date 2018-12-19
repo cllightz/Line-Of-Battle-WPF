@@ -15,7 +15,7 @@ namespace LineOfBattle
     {
         private BattleScene _scene;
         public DrawOptions DrawOptions { get; set; }
-        private const int HistoryLength = 20;
+        public const int MaxHistoryLength = 20;
         private List<Vector2> History;
         public float RoundsPerSecond;
         public float CoolDownTimer;
@@ -61,7 +61,7 @@ namespace LineOfBattle
         #endregion
 
         public bool HasFollowPos
-            => History.Count >= HistoryLength;
+            => History.Count >= MaxHistoryLength;
 
         #region Move Methods
         public void Move()
@@ -70,6 +70,11 @@ namespace LineOfBattle
         public void Move( Vector2 newposition )
         {
             History.Add( DrawOptions.Position );
+
+            if ( History.Count > MaxHistoryLength ) {
+                History.RemoveAt( 0 );
+            }
+
             DrawOptions.Position = newposition;
         }
 
@@ -154,9 +159,15 @@ namespace LineOfBattle
         }
 
         public void Neutralize()
-            => DrawOptions.Color = new RawColor4( 1, 1, 0, 1 );
+        {
+            Faction = Faction.Neutral;
+            DrawOptions.Color = new RawColor4( 1, 1, 0, 1 );
+        }
 
         public void Unite()
-            => DrawOptions.Color = new RawColor4( 0, 1, 0, 0 );
+        {
+            Faction = Faction.Ally;
+            DrawOptions.Color = new RawColor4( 0, 1, 0, 1 );
+        }
     }
 }

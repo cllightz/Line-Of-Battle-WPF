@@ -30,6 +30,10 @@ namespace LineOfBattle.ViewModels
                               SceneUIViewModel.Value = new BattleSceneUIViewModel( uim );
                               break;
 
+                          case ResultSceneUIModel uim:
+                              SceneUIViewModel.Value = new ResultSceneUIViewModel( uim );
+                              break;
+
                           default:
                               throw new InvalidOperationException( $"No related Scene UI View Model found at the constructor of UIViewModel." );
                       }

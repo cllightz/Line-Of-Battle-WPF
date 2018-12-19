@@ -6,18 +6,12 @@ using ShootighLibrary.Device;
 
 namespace LineOfBattle.Scenes
 {
-    internal class TitleScene : SceneBase
+    internal class ResultScene : SceneBase
     {
-        private bool _ignoreOnce = true;
-
         protected override void Initialize()
             => Mouse.Left.Subscribe( isPressed => {
                 if ( isPressed ) {
-                    if ( _ignoreOnce ) {
-                        _ignoreOnce = false;
-                    } else {
-                        GameInstance.TransitScene<BattleScene>();
-                    }
+                    GameInstance.TransitScene<TitleScene>();
                 }
             } ).AddTo( Disposables );
 

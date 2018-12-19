@@ -44,7 +44,7 @@ namespace LineOfBattle
                 }
             }
 
-            if ( (!Units.Any() || Units.Last().HasFollowPos) && UnitAdditionQueue.Any() ) {
+            if ( UnitAdditionQueue.Any() && ( !Units.Any() || Units.Last().HasFollowPos) ) {
                 Units.Add( UnitAdditionQueue.Peek() );
                 UnitAdditionQueue.Dequeue();
             }

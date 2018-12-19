@@ -22,7 +22,7 @@ namespace ShootighLibrary.MVVM
         #region IDisposable
         protected CompositeDisposable Disposables { get; } = new CompositeDisposable();
 
-        public void Dispose() => Disposables.Dispose();
+        public virtual void Dispose() => Disposables.Dispose();
         #endregion
     }
 }

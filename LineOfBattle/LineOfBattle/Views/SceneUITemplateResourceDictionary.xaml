@@ -54,5 +54,21 @@
             <Control />
         </DockPanel>
     </DataTemplate>
-    
+
+    <DataTemplate DataType="{x:Type vm:ResultSceneUIViewModel}">
+        <StackPanel VerticalAlignment="Center">
+            <TextBlock Text="{Binding GameOver, Mode=OneWay}"
+                       HorizontalAlignment="Stretch" TextAlignment="Center" TextWrapping="Wrap"
+                       FontSize="64" FontFamily="Consolas" Foreground="Red"
+                       />
+            <Control Height="50" />
+            <TextBlock Text="{Binding Prompt, Mode=OneWay}"
+                       Style="{StaticResource FadeInStyle}"
+                       HorizontalAlignment="Stretch" TextAlignment="Center" TextWrapping="Wrap"
+                       FontSize="36" FontFamily="Consolas" Foreground="White"
+                       />
+            <Control Height="100" />
+        </StackPanel>
+    </DataTemplate>
+
 </ResourceDictionary>

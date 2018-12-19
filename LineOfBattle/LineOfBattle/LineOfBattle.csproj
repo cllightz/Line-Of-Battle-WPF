@@ -146,10 +146,12 @@
     <Compile Include="Scenes\BattleScene.cs" />
     <Compile Include="Faction.cs" />
     <Compile Include="Maneuver.cs" />
+    <Compile Include="Scenes\ResultScene.cs" />
     <Compile Include="Shell.cs" />
     <Compile Include="Scenes\TitleScene.cs" />
     <Compile Include="Unit.cs" />
     <Compile Include="ViewModels\BattleSceneUIViewModel.cs" />
+    <Compile Include="ViewModels\ResultSceneUIViewModel.cs" />
     <Compile Include="ViewModels\TitleSceneUIViewModel.cs" />
     <Compile Include="ViewModels\UIViewModel.cs" />
     <Page Include="Views\AnimationResourceDictionary.xaml">

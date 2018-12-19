@@ -19,8 +19,10 @@ namespace LineOfBattle.Models
             Mediator.Singleton.Subscribe<GainScoreMessageArgs>( typeof( BattleSceneUIModel ), args => Score += args.Value );
         }
 
-        ~BattleSceneUIModel()
+        public override void Dispose()
         {
+            base.Dispose();
+
             if ( Score > HighScore ) {
                 Properties.Settings.Default.HighScore = Score;
                 Properties.Settings.Default.Save();
