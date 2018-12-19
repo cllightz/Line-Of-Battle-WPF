@@ -61,19 +61,19 @@ namespace ShootighLibrary.Messenger
         }
 
 #if DEBUG
-        public Mediator DebugOutput( Action<string> output )
+        public Mediator DebugOutputPublishers( Action<string> output )
         {
             output( string.Join( "\n",
-                _channels.SelectMany( ch =>
-                    (ch.Value as IChannel).EnumeratePublishers().Select( type => {
-                        return "TArgs,PublisherType";
-                        // IChannel<TArgs> の TArgs が何かを取得して、以下のような行を生成したい
-                        // リフレクションは理想、
-                        // デバッグ出力はできなくても、列挙まで出来てるところをアピールできればよい
-                        // {TArgs},{PublisherType}
-                    } )
-                    // .Concat( (ch.Value as IChannel).EnumerateSubscribers() )
-                )
+                _channels.SelectMany( ch => (ch.Value as IChannel).EnumeratePublishers().Select( publisherType => $"{ch.Value.GetType().GetGenericArguments()[ 0 ].FullName},{publisherType}" ) )
+            ) );
+
+            return this;
+        }
+
+        public Mediator DebugOutputSubscribers( Action<string> output )
+        {
+            output( string.Join( "\n",
+                _channels.SelectMany( ch => (ch.Value as IChannel).EnumerateSubscribers().Select( subscriberType => $"{ch.Value.GetType().GetGenericArguments()[ 0 ].FullName},{subscriberType}" ) )
             ) );
 
             return this;

@@ -43,11 +43,17 @@ namespace LineOfBattle.Models
 
         internal void DebugSaveMessengerInfo()
         {
-            Mediator.Singleton.DebugOutput( s => {
-                var path = Path.GetTempPath();
-                // WriteLine
-                // 時間がかかりそうであれば Debug.WriteLine() でもOK
-            } );
+            void mkdir( string path ) { if ( !Directory.Exists( path ) ) { Directory.CreateDirectory( path ); } };
+
+            var lobDir = Path.Combine( Path.GetTempPath(), "line_of_battle" );
+            mkdir( lobDir );
+            var msgDir = Path.Combine( lobDir, "messenger_debug_outputs" );
+            mkdir( msgDir );
+            var timeDir = Path.Combine( msgDir, DateTime.Now.ToString( "yyyyMMdd_HHmmss_fff" ) );
+            mkdir( timeDir );
+
+            Mediator.Singleton.DebugOutputPublishers( s => File.WriteAllText( Path.Combine( timeDir, "publishers.csv" ), s ) );
+            Mediator.Singleton.DebugOutputSubscribers( s => File.WriteAllText( Path.Combine( timeDir, "subscribers.csv" ), s ) );
         }
     }
 }
